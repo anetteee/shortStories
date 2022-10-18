@@ -12,13 +12,15 @@ interface QuoteIventoryData {
     quoteInventory: QuoteIventory[];
 }
 
+/*
 interface QuoteInventoryVars {
     author: string;
 }
+*/
 
 const GET_QUOTE_INVENTORY = gql`
-    query getQuoteInventory($author: String!) {
-        quotesInventory(author: $author) {
+    query getQuoteInventory {
+        getQuote {
             _id
             id
             quote
@@ -28,9 +30,8 @@ const GET_QUOTE_INVENTORY = gql`
 `;
 
 export function Query() {
-    const {loading, data} = useQuery<QuoteIventoryData, QuoteInventoryVars> (
-        GET_QUOTE_INVENTORY, 
-        {variables: {author: "Kevin Kruse"}}
+    const {loading, data} = useQuery<QuoteIventoryData> (
+        GET_QUOTE_INVENTORY
     );
     
     console.log(data)
@@ -44,16 +45,19 @@ export function Query() {
                 <table>
                     <thead>
                         <tr>
+                            <th>ObjectID</th>
+                            <th>Id (Number)</th>
                             <th>Quote</th>
-                            <th>Id (Number in list)</th>
+                            <th>Author</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
-                        {data && data.quoteInventory.map(inventory => (
+                        {data && data.quoteInventory?.map(inventory => (
                             <tr>
-                                <td>{inventory.quote}</td>
+                                <td>{inventory._id}</td>
                                 <td>{inventory.id}</td>
+                                <td>{inventory.quote}</td>
+                                <td>{inventory.author}</td>
                             </tr>
                         ))}
                     </tbody>
