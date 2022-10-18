@@ -32,8 +32,11 @@ export function Query() {
         GET_QUOTE_INVENTORY, 
         {variables: {author: "Kevin Kruse"}}
     );
+    
+    console.log(data)
     return (
         <div>
+            
             <h3>Available Inventory</h3>
             {loading ? (
                 <p>Loading...</p>
@@ -46,6 +49,7 @@ export function Query() {
                         </tr>
                     </thead>
                     <tbody>
+                        
                         {data && data.quoteInventory.map(inventory => (
                             <tr>
                                 <td>{inventory.quote}</td>
