@@ -1,21 +1,24 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 
-const GET_QUOTE_INVENTORY = gql`
+const GET_POST_INVENTORY = gql`
   query getQuoteInventory {
-    getQuote {
+    getPost {
       _id
       id
-      quote
-      author
+      title
+      body
+      userId
+      tags
+      reactions
     }
   }
 `;
 
 export function Query() {
-  const { loading, data } = useQuery(GET_QUOTE_INVENTORY);
+  const { loading, data } = useQuery(GET_POST_INVENTORY);
 
-  console.log("DataInventory", GET_QUOTE_INVENTORY);
+  console.log("DataInventory", GET_POST_INVENTORY);
   return (
     <div>
       <h3>Available Inventory</h3>
@@ -27,18 +30,24 @@ export function Query() {
             <tr>
               <th>ObjectID</th>
               <th>Id (Number)</th>
-              <th>Quote</th>
-              <th>Author</th>
+              <th>Title</th>
+              <th>Body</th>
+              <th>UserId</th>
+              <th>Tags</th>
+              <th>Reactions</th>
             </tr>
           </thead>
           <tbody>
             {data &&
-              data.getQuote?.map((inventory: any) => (
+              data.getPost?.map((inventory: any) => (
                 <tr>
                   <td>{inventory._id}</td>
                   <td>{inventory.id}</td>
-                  <td>{inventory.quote}</td>
-                  <td>{inventory.author}</td>
+                  <td>{inventory.title}</td>
+                  <td>{inventory.body}</td>
+                  <td>{inventory.userId}</td>
+                  <td>{inventory.tags}</td>
+                  <td>{inventory.reactions}</td>
                 </tr>
               ))}
           </tbody>
