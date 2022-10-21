@@ -9,6 +9,7 @@ const typeDefs = gql`
   }
   type Query {
     getQuote: [Quote!]
+    getOneQuote(id: Int): Quote
   }
 `;
 
