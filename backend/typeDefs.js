@@ -1,15 +1,18 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
-  type Quote {
+  type Post {
     _id: ID
     id: Int
-    quote: String
-    author: String
+    title: String
+    body: String
+    userId: Int
+    tags: [String]
+    reactions: Int
   }
   type Query {
-    getQuote: [Quote!]
-    getOneQuote(id: Int): Quote
+    getPost: [Post!]
+    getOnePost(id: Int): Post
   }
 `;
 
