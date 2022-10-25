@@ -17,8 +17,19 @@ const typeDefs = gql`
   }
   type Mutation {
     incrementReaction(id: Int): IncrementReactionResponse!
+    decreaseReaction(id: Int): DecreaseReactionResponse!
   }
   type IncrementReactionResponse {
+    "Similar to HTTP status code, represents the status of the mutation"
+    code: Int!
+    "Indicates whether the mutation was successful"
+    success: Boolean!
+    "Human-readable message for the UI"
+    message: String!
+    "Newly updated post after a successful mutation"
+    post: Post
+  }
+  type DecreaseReactionResponse {
     "Similar to HTTP status code, represents the status of the mutation"
     code: Int!
     "Indicates whether the mutation was successful"
