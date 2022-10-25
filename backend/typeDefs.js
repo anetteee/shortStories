@@ -13,6 +13,7 @@ const typeDefs = gql`
   type Query {
     getPost: [Post!]
     getOnePost(id: Int): Post
+    getPostOnTag(tag: String): [Post!]
   }
 `;
 

@@ -11,6 +11,12 @@ const resolver = {
       const data = await Post.find();
       return data.find((q) => q.id === args.id);
     },
+    //gets post to specific tag passed in args
+    getPostOnTag: async (parent, args, context, info) => {
+      console.log(args.tag);
+      const data = await Post.find({ tags: args.tag });
+      return data;
+    },
   },
 };
 
