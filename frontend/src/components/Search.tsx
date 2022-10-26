@@ -69,12 +69,12 @@ const SearchBar: React.FC = () => {
       </header>
 
       <section className="blue-container search">
-        <form className="search-form" action="search-form">
-          <label className="search-label" htmlFor="">
+        <form className="search-form yellow-wrapper" action="search-form">
+          <label className="search-label purple-container" htmlFor="">
             Search by title
           </label>
           <input
-            className="search-input"
+            className="search-input purple-container"
             type="text"
             placeholder=" Search..."
             value={searchText}
@@ -84,21 +84,23 @@ const SearchBar: React.FC = () => {
             }}
           />
 
-          <button
-            className="search-btn"
-            disabled={!searchText}
-            onClick={handleOnClick}
-            font-style="Gill Sans"
-          >
-            Search
-          </button>
+          <div className="purple-container">
+            <button
+              className="search-btn"
+              disabled={!searchText}
+              onClick={handleOnClick}
+              font-style="Gill Sans"
+            >
+              Search
+            </button>
+          </div>
         </form>
       </section>
-      <section className="blue-container filter-and-sort">
-        <div className="book-img-div">
+      <section className="filter-and-sort-div blue-container ">
+        <div className="book-img-div yellow-wrapper">
           <img src={process.env.PUBLIC_URL + "/stories.svg"} alt="Books"></img>
         </div>
-        <div className="filter">
+        <div className="filter-div yellow-wrapper">
           <label className="filter-label" htmlFor="filter">
             Filter stories on tag{" "}
           </label>
@@ -109,7 +111,7 @@ const SearchBar: React.FC = () => {
             <option value="funny">Funny</option>
           </select>
         </div>
-        <div className="sort">
+        <div className="sort-div yellow-wrapper">
           <label htmlFor="sort">Sort stories by </label>
           <select name="sort" id="sort-drop-down">
             <option value="default">Default</option>
@@ -122,47 +124,48 @@ const SearchBar: React.FC = () => {
       <section className="blue-container results">
         {/* denne labelen bør legges til slik at den dukker opp når man trykker søk */}
         {/* <label>Results from search</label> */}
-        <div>
-          {loading ? (
-            <h3>Loading...</h3>
-          ) : (
-            <tbody>
-              {/* inventory er alle elementene i mappingen */}
-              {data &&
-                data.getPost?.map((inventory: any) => (
-                  <div className="short-story-div">
-                    <h2>{inventory.title}</h2>
-                    <div>
-                      {readMore
-                        ? `${inventory.body}`
-                        : `${inventory.body.substring(0, 100)}...`}
-                      <br />
-                      <div className="bottom-row-div">
-                        <button
-                          className="read-more-btn"
-                          onClick={() => setReadMore(!readMore)}
-                        >
-                          {readMore ? "Read less" : "Read more"}
-                        </button>
 
-                        <div className="favorite-div">
-                          <label className="favorite-label">
-                            Mark as favorite{" "}
-                          </label>
-                          <input
-                            type="checkbox"
-                            onChange={handleChange}
-                            checked={isFavorite}
-                          />
-                          <span className="checkmark"></span>
-                        </div>
-                      </div>
+        {loading ? (
+          <h3>Loading...</h3>
+        ) : (
+          <div className="orange-div">
+            {/* <tbody> */}
+            {/* inventory er alle elementene i mappingen */}
+            {data &&
+              data.getPost?.map((inventory: any) => (
+                <div className="grey-div">
+                  <h2>{inventory.title}</h2>
+                  {/* <div> */}
+                  {readMore
+                    ? `${inventory.body}`
+                    : `${inventory.body.substring(0, 100)}...`}
+                  <br />
+                  <div className="bottom-row-div">
+                    <button
+                      className="read-more-btn"
+                      onClick={() => setReadMore(!readMore)}
+                    >
+                      {readMore ? "Read less" : "Read more"}
+                    </button>
+
+                    <div className="favorite-div">
+                      <label className="favorite-label">
+                        Mark as favorite{" "}
+                      </label>
+                      <input
+                        type="checkbox"
+                        onChange={handleChange}
+                        checked={isFavorite}
+                      />
+                      <span className="checkmark"></span>
                     </div>
                   </div>
-                ))}
-            </tbody>
-          )}
-        </div>
+                  {/* </div> */}
+                </div>
+              ))}
+            {/* </tbody> */}
+          </div>
+        )}
 
         {/* <h2>Title</h2>
           <h3>
