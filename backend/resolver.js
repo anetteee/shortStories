@@ -6,10 +6,11 @@ const resolver = {
       const data = await Post.find();
       return data;
     },
-    //gets post to specific id passed in args
-    getOnePost: async (parent, args, context, info) => {
-      const data = await Post.find();
-      return data.find((q) => q.id === args.id);
+
+    getPostsBySearch: async (parent, args, context, info) => {
+      var regExp = new RegExp(args.input, "i");
+      const data = await Post.find({ title: { $regex: regExp } });
+      return data;
     },
   },
 };
