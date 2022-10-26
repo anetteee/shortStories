@@ -2,19 +2,17 @@ const Post = require("./models/Post");
 
 const resolver = {
   Query: {
-    getPost: async () => {
-      const data = await Post.find();
-      return data;
-    },
-    //gets post to specific id passed in args
-    getOnePost: async (parent, args, context, info) => {
-      const data = await Post.find();
-      return data.find((q) => q.id === args.id);
-    },
-    //gets post to specific tag passed in args
-    getPostOnTag: async (parent, args, context, info) => {
-      console.log(args.tag2);
-      const data = await Post.find({ tags: args.tag, tags: args.tag2 });
+    getPost: async (parent, args, context, info) => {
+      //the query for getting the posts with desired filter
+      let data;
+      if (args.tag != null) {
+        //filter on tag
+        data = await Post.find({ tags: args.tag });
+      } else {
+        //no filter is chosen, sets data to all the results
+        data = await Post.find();
+      }
+
       return data;
     },
   },

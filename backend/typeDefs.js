@@ -11,9 +11,7 @@ const typeDefs = gql`
     reactions: Int
   }
   type Query {
-    getPost: [Post!]
-    getOnePost(id: Int): Post
-    getPostOnTag(tag: String, tag2: String): [Post!]
+    getPost(tag: String): [Post!]
   }
 `;
 
