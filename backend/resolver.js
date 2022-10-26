@@ -1,7 +1,7 @@
 const Post = require("./models/Post");
 
 const resolver = {
-  // methods that get data from database
+  //methods that get data from database
   Query: {
     getPost: async () => {
       const data = await Post.find();
@@ -14,7 +14,7 @@ const resolver = {
     },
   },
 
-  // methods that changes/updates fields in the database
+  //methods that changes/updates fields in the database
   Mutation: {
     //increments the reaction count of the spesific post by id
     incrementReaction: async (_, { id }) => {
@@ -43,10 +43,11 @@ const resolver = {
           post,
         };
       } catch (error) {
+        //returns a default respons
         return {
-          code: error.extensions?.response.status, // can probably let it be null?
+          code: 404,
           success: false,
-          message: error.extensions?.response.body, // can probably let it be null?
+          message: "Unknown error",
           post: null,
         };
       }
@@ -78,10 +79,11 @@ const resolver = {
           post,
         };
       } catch (error) {
+        // returns a default response
         return {
-          code: error.extensions?.response.status, // can probably let it be null? or set to whatever we want
+          code: 404,
           success: false,
-          message: error.extensions?.response.body, // can probably let it be null? or set to whatever we want
+          message: "Unknown error",
           post: null,
         };
       }
