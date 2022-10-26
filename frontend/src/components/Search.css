@@ -1,67 +1,174 @@
-.title {
 
-    color: white;
-    width: 100%;
-    padding: 40px 0px;
-    text-align: center;
+.parent-container {
+    /* setter innholdet på siden til å være sentrert */
+    margin: auto;
+    max-width: 700px;
+    /* kun ment som kladd for å vise hvor containeren er */
+    /* border: 3px solid pink;  */
+    /* bestemmer her at innholde i parent-container skal være 30px unna parent-container-kanten.*/
+    padding: 15px;
 }
+/* .blue-container {
+    border: 2px solid rgb(99, 185, 255);
+} */
 
-.title h1 {
-    padding: 0px;
-    margin: 0px;
+
+
+/* SEARCH */
+
+.search-form {
+    padding: 1%;
+    padding-bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    /* border: 1px solid rgb(255, 238, 111); */
 }
-
-.input_wrapper {
-    
-
-    align-items: center;
-    margin: 20px;
-    text-align: center;
+.search-label {
+    grid-row: 1;
+    grid-column: 1/5; 
 }
-
-.input_wrapper input {
-
-    border: 2px solid #256670;
-
-    padding: 8px 20px;
-
-    align-items: left;
-    border-radius: 0;
-    font-size: 18px;
-    text-align: left !important;
+.search-input {
+    grid-row: 2;
+    grid-column: 1/5;  
+    margin-right: 1%; 
 }
-
-.input_wrapper input:focus {
-    outline: none;
-}
-
-.input_wrapper button {
-
-    color: white;
-    padding: 8px 25px;
-    font-size: 18px;
+.search-btn {
+    margin-left: 2%;
+    grid-row:  2;
+    grid-column: 5 / 5;
+    background-color: #193d1a; /* Green */
     border: none;
-    border: 2px solid #256670;
-
-    border-radius: 5px;
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.body_item {
-    text-align: left !important;
-    color: white;
-    border: 1px solid white;
-    padding: 20px;
-    width: 500px;
-    margin: 20px auto;
-}
-
-.notFound {
-    width: 500px;
-    margin: 20px auto;
-    padding: 20px;
-    color: white;
-    border: 1px solid white;
+    color: white;        
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
+
+
+
+
+/* FILTER and SORT */
+
+
+/* this is where we make a div span two rows in a grid using css */
+.filter-and-sort {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+}
+.filter {
+    padding: 1%;
+    /* border: 1px solid rgb(255, 238, 111); */
+    grid-row: 1;
+    grid-column: 1/5;
+    display: flex;
+    flex-direction: column;
+}
+.sort {
+    padding: 1%;
+    /* border: 1px solid rgb(255, 238, 111); */
+    grid-row: 2;
+    grid-column: 1/5;
+    display: flex;
+    flex-direction: column;
+}
+.book-img-div {
+    /* border: 1px solid rgb(246, 163, 255); */
+    grid-row:  1/3;
+    grid-column: 5 / 5;
+}
+
+
+#filter-drop-down {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+}
+#sort-drop-down {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+}
+
+@media (max-width: 40em) {
+    /* når skjermen blir mindre så skal bildet, filter-select og sort-select elementene plasseres i hver sin rad */
+    .filter-and-sort {
+        display: block;
+        padding: 0;
+    }
+
+    /* korsen skal bildet minimeres??? */ 
+    /* allerede gjort ?? */
+     */
+    .book-img-div {
+        max-height: 90px;
+        margin-bottom: 1em;
+
+    }
+    
+    img {
+        /* gjøres for å unngå at bildet blir kjempestort */
+        max-height: 100px;
+        /* sentrerer bildet i midten ved å skrive: */
+        margin: auto;
+        padding-top: 0;
+    }
+}
+
+/* RESULTS */
+
+.results {
+    margin-top: 3%;
+    padding: 1%;
+}
+.short-story-div {
+    margin-top: 1%;
+    padding: 2%;
+    border: 2px solid lightgray;
+}
+.bottom-row-div {
+    /* border: 1px solid rgb(246, 163, 255); */
+    margin-top: 1%;
+}
+.favorite-div {
+    color: #0b1a0b;
+    font-size:large;
+    float: right;
+}
+.read-more-btn {
+    background: none !important;
+    border: none;
+    padding: 0 !important;
+    cursor: pointer;
+    /* color: white; */
+    color: #0b1a0b;
+    font-size:large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    /* margin-top: 1%; */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* instead of setting a width in px here, and then changing it to another px by using media query 
+    we set a max-width
+    */

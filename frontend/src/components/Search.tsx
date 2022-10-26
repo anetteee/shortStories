@@ -1,100 +1,143 @@
 import React, { useState } from "react";
 import "./Search.css";
+import { useQuery, gql } from "@apollo/client";
+import { storeValueIsStoreObject } from "@apollo/client/cache/inmemory/helpers";
 
 const SearchBar: React.FC = () => {
+  const GET_POST_INVENTORY = gql`
+    query getQuoteInventory {
+      getPost {
+        _id
+        id
+        title
+        body
+        userId
+        tags
+        reactions
+      }
+    }
+  `;
+
   //dataen det søkes blant:
-  const users = [
-    {
-      name: "Rebecca",
-      age: 20,
-      designation: "Bonde",
-    },
-    {
-      name: "Jakobine",
-      age: 25,
-      designation: "President",
-    },
-    {
-      name: "Jo",
-      age: 30,
-      designation: "Foreleser",
-    },
-    {
-      name: "Bankimoon",
-      age: 20,
-      designation: "Kjendis",
-    },
-    {
-      name: "johannes",
-      age: 20,
-      designation: "Software Engineer",
-    },
-  ];
+  const { loading, data } = useQuery(GET_POST_INVENTORY);
 
-  //userList settes til å være dataen det søkes blant, nemlig users (som er definert over)
-  const [userList, setUserList] = React.useState<
-    { name: string; age: number; designation: string }[] | undefined
-  >(users);
+  //storyList settes til å være dataen det søkes blant, nemlig stories (som er definert over)
+  const [storyList, setStoryList] = React.useState<
+    | {
+        _id: String;
+        id: Number;
+        title: String;
+        body: String;
+        userId: Number;
+        tags: Array<String>;
+        reactions: Number;
+      }[]
+    | undefined
+  >(data);
 
-  const [text, setText] = React.useState<string>("");
+  console.log("DataInventory", GET_POST_INVENTORY);
+
+  const [searchText, setSearchText] = React.useState<string>("");
 
   //funksjon som kalles på når det Search-button trykkes på.
   const handleOnClick = () => {
-    //finner brukeren (eller brukerne) som har navnet som det søkes på. dersom userList ikke er satt eller lengden på userList ikke er større enn null, så settes findUsers til å være undefined.
-    const findUsers =
-      userList && userList?.length > 0
-        ? userList?.filter((u) => u?.name === text)
+    //finner story (eller storyene) som har tittelen som det søkes på. dersom storyList ikke er satt eller lengden på storyList ikke er større enn null, så settes findStories til å være undefined.
+    const findStories =
+      storyList && storyList?.length > 0
+        ? storyList?.filter((u) => u?.title === searchText)
         : undefined;
 
-    console.log(findUsers);
+    console.log(findStories);
 
-    //userList som skal vises settes til å være søkeresultatet fra findUsers
-    setUserList(findUsers);
+    //storyList som skal vises settes til å være søkeresultatet fra findStories
+    setStoryList(findStories);
+  };
+
+  const [readMore, setReadMore] = useState(false);
+  const story =
+    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi labore voluptatibus vero impedit voluptatem id itaque laudantium ex, voluptate consequuntur sunt officiis illo quae exercitationem ut. In, quia quisquam voluptas quas optio ipsam voluptatum at soluta neque quis veniam laboriosam culpa quaerat quam blanditiis doloribus qui veritatis nisi! Beatae laboriosam odit id veniam, sint, dolorum pariatur, voluptatem quos modi nisi vitae voluptatum quidem corrupti necessitatibus officia non repudiandae accusantium quasi eum facere laudantium dolores. Explicabo quisquam ullam ducimus repellendus inventore maxime, sit totam architecto saepe corporis. Dolores a ut doloribus nisi fugit ex, totam at rem sed pariatur est et consectetur odio modi provident accusantium eaque mollitia architecto perspiciatis laboriosam voluptatibus, itaque nihil quaerat deleniti. Vel ullam vero, in, sequi ipsum maxime dolorum magni cupiditate eos quas ratione non veritatis maiores iure est recusandae blanditiis eius molestias minima natus. Odio consequuntur ipsam voluptatem sunt sint minima repellat non magnam inventore ratione, rerum delectus excepturi quae veritatis dolorem cumque labore voluptas optio facilis nisi molestias repudiandae aut. Eaque, numquam totam, unde corrupti quidem eligendi itaque exercitationem inventore ea in eos soluta est illo assumenda obcaecati cupiditate nihil quaerat ducimus fuga, iure perspiciatis adipisci voluptatum? Aut reiciendis non labore? Dicta, delectus placeat!";
+
+  const [isFavorite, setIsFavorite] = useState(false);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsFavorite(e.target.checked);
   };
 
   // TODO endre div til header, input, button etc. for mer sustainable kode
   return (
-    <div className="App">
-      <div className="title">
-        <h1>Title</h1>
-      </div>
-      <div className="input_wrapper">
-        <input
-          type="text"
-          placeholder="Search user"
-          value={text}
-          //når det skrives inn noe i input-feltet så settes teksten til å være det som skrives. userList settes til å være dataen det skal søkes blant.
-          onChange={(e) => {
-            setText(e.target.value);
-            setUserList(users);
-          }}
-        />
-        {/* dersom det ikke er noe innhold i input-feltet, så er knappen disabled (det er ikke mulig å trykke på den). 
-        så fort det skrives inn noe i input-feltet, så blir det mulig å trykke på den*/}
-        <button disabled={!text} onClick={handleOnClick}>
-          Search
-        </button>
-      </div>
-      <div className="body">
-        {/* dersom userList er satt men lengden er lik 0, så returneres No user found. 
-        Jeg tror at "===" betyr at operatoren ikke gjør type-conversions */}
-        {userList && userList?.length === 0 && (
-          <div className="notFound">No user found</div>
-        )}
+    <div className="parent-container">
+      <header className="blue-container text-center">
+        <h1>Fantastic short stories</h1>
+        <p>Search among thousands of titles!!</p>
+      </header>
 
-        {/* dersom userList er satt og lengden er større enn 0, så presenteres userList til å være en liste med body_items; en for hver user.  */}
-        {userList &&
-          userList?.length > 0 &&
-          userList?.map((user) => {
-            return (
-              <div className="body_item">
-                <h2>Name: {user?.name}</h2>
-                <p>Age: {user?.age}</p>
-                <p>Designation: {user?.designation}</p>
+      <section className="blue-container search">
+        <form className="search-form" action="search-form">
+          <label className="search-label" htmlFor="">
+            Search by title
+          </label>
+          <input
+            className="search-input"
+            type="text"
+            placeholder=" Search..."
+          />
+          <button className="search-btn">Search</button>
+        </form>
+      </section>
+      <section className="blue-container filter-and-sort">
+        <div className="book-img-div">
+          <img src={process.env.PUBLIC_URL + "/stories.svg"} alt="Books"></img>
+        </div>
+        <div className="filter">
+          <label className="filter-label" htmlFor="filter">
+            Filter stories on tag{" "}
+          </label>
+          <select name="filter" id="filter-drop-down">
+            <option value="choose">Choose filter</option>
+            <option value="romance">Romance</option>
+            <option value="horror">Horror</option>
+            <option value="funny">Funny</option>
+          </select>
+        </div>
+        <div className="sort">
+          <label htmlFor="sort">Sort stories by </label>
+          <select name="sort" id="sort-drop-down">
+            <option value="default">Default</option>
+            <option value="length">Length</option>
+            <option value="likes">Likes</option>
+            <option value="title">Title</option>
+          </select>
+        </div>
+      </section>
+      <section className="blue-container results">
+        <label>Results from search</label>
+        <div className="short-story-div">
+          <h2>Title</h2>
+          <h3>
+            {readMore ? `${story}` : `${story.substring(0, 100)}...`}
+            <br />
+            <div className="bottom-row-div">
+              <button
+                className="read-more-btn"
+                onClick={() => setReadMore(!readMore)}
+              >
+                {readMore ? "Read less" : "Read more"}
+              </button>
+
+              <div className="favorite-div">
+                <label>Mark as favorite </label>
+                <input
+                  type="checkbox"
+                  onChange={handleChange}
+                  checked={isFavorite}
+                />
+                <span className="checkmark"></span>
               </div>
-            );
-          })}
-      </div>
+            </div>
+          </h3>
+        </div>
+      </section>
+
+      <footer></footer>
     </div>
   );
 };
