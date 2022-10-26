@@ -10,9 +10,10 @@ const typeDefs = gql`
     tags: [String]
     reactions: Int
   }
+
   type Query {
     getPost: [Post!]
-    getOnePost(id: Int): Post
+    getPostsBySearch(input: String): [Post!]
   }
 `;
 
