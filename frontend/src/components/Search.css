@@ -31,20 +31,36 @@
     grid-row: 2;
     grid-column: 1/5;  
     margin-right: 1%; 
+
 }
 .search-btn {
+
+    background-color: #f4f4f4; /* Green */
+    border:1px solid #63ae59;
+    color: black;
+    transition: all 0.3s ease 0s;
+    outline: none;
+    border-radius: 3px;  
+    font-size:medium;
+
+
+
     margin-left: 2%;
     grid-row:  2;
     grid-column: 5 / 5;
-    background-color: #193d1a; /* Green */
-    border: none;
-    color: white;        
     padding-top: 0.5em;
     padding-bottom: 0.5em;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+}
+.search-btn:hover {
+    background-color: #9ed596; /* Green */
+    border:1px solid #63ae59;
+    color: black;
 }
 
 
@@ -133,20 +149,51 @@
     margin-top: 1%;
 }
 .favorite-div {
-    color: #0b1a0b;
-    font-size:large;
+    /* border:1px solid #193915;  */
+    margin-top: 0.75em;  
     float: right;
 }
+
 .read-more-btn {
-    background: none !important;
+    /* background-color: #193915; */ /* Green */
+    /* border:1px solid #193915;  */
+
+    background-color: #f4f4f4; /* Green */
+    border:1px solid #63ae59;
+    color: black;
+    transition: all 0.3s ease 0s;
+    outline: none;
+    border-radius: 3px;  
+    margin-top: 0.5em;   
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    /* font-size: 16px; */
+
+
+/* dersom man ikke vil ha bakgrunn på knappen */
+    /* background: none !important;
     border: none;
-    padding: 0 !important;
+    padding: 0 !important; */
+
     cursor: pointer;
-    /* color: white; */
-    color: #0b1a0b;
-    font-size:large;
+
+
+    font-size:medium;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     /* margin-top: 1%; */
+}
+
+.read-more-btn:hover {
+    background-color: #9ed596; /* Green */
+    border:1px solid #63ae59;
+    color: black;
 }
 
 

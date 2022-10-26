@@ -54,8 +54,6 @@ const SearchBar: React.FC = () => {
   };
 
   const [readMore, setReadMore] = useState(false);
-  const story =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi labore voluptatibus vero impedit voluptatem id itaque laudantium ex, voluptate consequuntur sunt officiis illo quae exercitationem ut. In, quia quisquam voluptas quas optio ipsam voluptatum at soluta neque quis veniam laboriosam culpa quaerat quam blanditiis doloribus qui veritatis nisi! Beatae laboriosam odit id veniam, sint, dolorum pariatur, voluptatem quos modi nisi vitae voluptatum quidem corrupti necessitatibus officia non repudiandae accusantium quasi eum facere laudantium dolores. Explicabo quisquam ullam ducimus repellendus inventore maxime, sit totam architecto saepe corporis. Dolores a ut doloribus nisi fugit ex, totam at rem sed pariatur est et consectetur odio modi provident accusantium eaque mollitia architecto perspiciatis laboriosam voluptatibus, itaque nihil quaerat deleniti. Vel ullam vero, in, sequi ipsum maxime dolorum magni cupiditate eos quas ratione non veritatis maiores iure est recusandae blanditiis eius molestias minima natus. Odio consequuntur ipsam voluptatem sunt sint minima repellat non magnam inventore ratione, rerum delectus excepturi quae veritatis dolorem cumque labore voluptas optio facilis nisi molestias repudiandae aut. Eaque, numquam totam, unde corrupti quidem eligendi itaque exercitationem inventore ea in eos soluta est illo assumenda obcaecati cupiditate nihil quaerat ducimus fuga, iure perspiciatis adipisci voluptatum? Aut reiciendis non labore? Dicta, delectus placeat!";
 
   const [isFavorite, setIsFavorite] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,7 +65,7 @@ const SearchBar: React.FC = () => {
     <div className="parent-container">
       <header className="blue-container text-center">
         <h1>Fantastic short stories</h1>
-        <p>Search among thousands of titles!!</p>
+        <p>Search among thousands of titles</p>
       </header>
 
       <section className="blue-container search">
@@ -79,8 +77,21 @@ const SearchBar: React.FC = () => {
             className="search-input"
             type="text"
             placeholder=" Search..."
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              setStoryList(data);
+            }}
           />
-          <button className="search-btn">Search</button>
+
+          <button
+            className="search-btn"
+            disabled={!searchText}
+            onClick={handleOnClick}
+            font-style="Gill Sans"
+          >
+            Search
+          </button>
         </form>
       </section>
       <section className="blue-container filter-and-sort">
@@ -109,9 +120,51 @@ const SearchBar: React.FC = () => {
         </div>
       </section>
       <section className="blue-container results">
-        <label>Results from search</label>
-        <div className="short-story-div">
-          <h2>Title</h2>
+        {/* denne labelen bør legges til slik at den dukker opp når man trykker søk */}
+        {/* <label>Results from search</label> */}
+        <div>
+          {loading ? (
+            <h3>Loading...</h3>
+          ) : (
+            <tbody>
+              {/* inventory er alle elementene i mappingen */}
+              {data &&
+                data.getPost?.map((inventory: any) => (
+                  <div className="short-story-div">
+                    <h2>{inventory.title}</h2>
+                    <div>
+                      {readMore
+                        ? `${inventory.body}`
+                        : `${inventory.body.substring(0, 100)}...`}
+                      <br />
+                      <div className="bottom-row-div">
+                        <button
+                          className="read-more-btn"
+                          onClick={() => setReadMore(!readMore)}
+                        >
+                          {readMore ? "Read less" : "Read more"}
+                        </button>
+
+                        <div className="favorite-div">
+                          <label className="favorite-label">
+                            Mark as favorite{" "}
+                          </label>
+                          <input
+                            type="checkbox"
+                            onChange={handleChange}
+                            checked={isFavorite}
+                          />
+                          <span className="checkmark"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </tbody>
+          )}
+        </div>
+
+        {/* <h2>Title</h2>
           <h3>
             {readMore ? `${story}` : `${story.substring(0, 100)}...`}
             <br />
@@ -133,8 +186,7 @@ const SearchBar: React.FC = () => {
                 <span className="checkmark"></span>
               </div>
             </div>
-          </h3>
-        </div>
+          </h3> */}
       </section>
 
       <footer></footer>
