@@ -19,7 +19,7 @@ const PostSchema = new mongoose.Schema(
       type: Number,
     },
     tags: {
-      type: Array,
+      type: [String],
     },
     reactions: {
       type: Number,
