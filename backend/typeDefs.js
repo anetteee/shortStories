@@ -10,8 +10,9 @@ const typeDefs = gql`
     tags: [String]
     reactions: Int
   }
+
   type Query {
-    getPost(tag: String): [Post!]
+    getPost(tag: String, input: String): [Post!]
   }
 `;
 
