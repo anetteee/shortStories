@@ -1,0 +1,225 @@
+
+.parent-container {
+    border: 3px solid pink; 
+
+    /* setter innholdet på siden til å være sentrert */
+    margin: auto;
+    max-width: 700px;
+    /* bestemmer her at innholde i parent-container skal være 30px unna parent-container-kanten.*/
+    padding: 15px;
+}
+.blue-container {
+    border: 2px solid rgb(99, 185, 255);
+}
+
+.purple-container {
+    border: 2px solid rgb(121, 69, 206);
+    
+    grid-row:  2;
+    grid-column: 5 / 5;
+    /* ka gjer dissa to her:???? */
+    outline: none;
+    display: inline-block;
+}
+.orange-div {
+    border: 2px solid rgb(255, 157, 0);
+}
+.grey-div { 
+    border: 2px solid lightgray;
+
+    margin-top: 1%;
+    padding: 2%;
+}
+.yellow-wrapper {
+    padding: 1%;
+    padding-right: 0 !important;
+    border: 1px solid rgb(255, 238, 111);
+}
+
+
+/* SEARCH */
+.search-form {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+}
+.search-label {
+    grid-row: 1;
+    grid-column: 1/5; 
+}
+.search-input {
+    grid-row: 2;
+    grid-column: 1/5;  
+}
+.search-btn {
+
+    display: inline-block;
+
+    background-color: #f4f4f4; /* Green */
+    border:1px solid #63ae59;
+    color: black;
+    transition: all 0.3s ease 0s;
+    border-radius: 3px;  
+    font-size:medium;
+    text-align: center;
+    /* text-decoration: none; */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+.search-btn:hover {
+    background-color: #9ed596; /* Green */
+    border:1px solid #63ae59;
+    color: black;
+}
+
+
+
+
+/* FILTER and SORT */
+
+
+/* this is where we make a div span two rows in a grid using css */
+.filter-and-sort-div {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+}
+.filter-div {
+    /* filter-delen være på rad nummer en og dekke kolonne 1-5 */
+    grid-row: 1;
+    grid-column: 1/5;
+    /* sørger for at label og drop-down vises på hver sin rad */
+    display: flex;
+    flex-direction: column;
+}
+.sort-div {
+    /* sort-delen være på rad nummer to og dekke kolonne 1-5 */
+    grid-row: 2;
+    grid-column: 1/5;
+    /* sørger for at label og drop-down vises på hver sin rad */
+    display: flex;
+    flex-direction: column;
+}
+.book-img-div {
+    grid-row:  1/3;
+    grid-column: 5 / 5;
+}
+
+
+#filter-drop-down {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+}
+#sort-drop-down {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    color: gray;
+}
+
+@media (max-width: 40em) {
+    /* når skjermen blir mindre så skal bildet, filter-select og sort-select elementene plasseres i hver sin rad */
+    .filter-and-sort {
+        display: block;
+        padding: 0;
+    }
+
+    /* korsen skal bildet minimeres??? */ 
+    /* allerede gjort ?? */
+     */
+    .book-img-div {
+        max-height: 90px;
+        margin-bottom: 1em;
+
+    }
+    
+    img {
+        /* gjøres for å unngå at bildet blir kjempestort */
+        max-height: 100px;
+        /* sentrerer bildet i midten ved å skrive: */
+        margin: auto;
+        padding-top: 0;
+    }
+}
+
+/* RESULTS */
+
+.results {
+    margin-top: 3%;
+    padding: 1%;
+}
+.bottom-row-div {
+    border: 1px solid rgb(246, 163, 255);
+    margin-top: 1%;
+}
+.favorite-div {
+    /* border:1px solid #193915;  */
+    margin-top: 0.75em;  
+    float: right;
+}
+
+.read-more-btn {
+    /* background-color: #193915; */ /* Green */
+    /* border:1px solid #193915;  */
+
+    background-color: #f4f4f4; /* Green */
+    border:1px solid #63ae59;
+    color: black;
+    transition: all 0.3s ease 0s;
+    outline: none;
+    border-radius: 3px;  
+    margin-top: 0.5em;   
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+    padding-left: 1em;
+    padding-right: 1em;
+
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    /* font-size: 16px; */
+
+
+/* dersom man ikke vil ha bakgrunn på knappen */
+    /* background: none !important;
+    border: none;
+    padding: 0 !important; */
+
+    cursor: pointer;
+
+
+    font-size:medium;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    /* margin-top: 1%; */
+}
+
+.read-more-btn:hover {
+    background-color: #9ed596; /* Green */
+    border:1px solid #63ae59;
+    color: black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* instead of setting a width in px here, and then changing it to another px by using media query 
+    we set a max-width
+    */

@@ -12,8 +12,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    getPost: [Post!]
-    getPostsBySearch(input: String): [Post!]
+    getPost(tag: String, input: String): [Post!]
   }
 `;
 
