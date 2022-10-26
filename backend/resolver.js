@@ -8,7 +8,7 @@ const resolver = {
     },
 
     getPostsBySearch: async (parent, args, context, info) => {
-      var regExp = new RegExp(args.input, "i");
+      var regExp = new RegExp("\\b" + args.input + "\\b", "i");
       const data = await Post.find({ title: { $regex: regExp } });
       return data;
     },
