@@ -11,9 +11,9 @@ const typeDefs = gql`
     tags: [String]
     reactions: Int
   }
+
   type Query {
-    getPost: [Post!]
-    getOnePost(id: Int): Post
+    getPost(tag: String, input: String): [Post!]
   }
   type Mutation {
     incrementReaction(id: Int): IncrementReactionResponse!
