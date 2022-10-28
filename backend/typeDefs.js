@@ -12,7 +12,13 @@ const typeDefs = gql`
   }
 
   type Query {
-    getPost(tag: String, input: String, sortBy: String): [Post!]
+    getPost(
+      tag: String
+      input: String
+      sortBy: String
+      limit: Int
+      offset: Int
+    ): [Post!]
   }
 `;
 
