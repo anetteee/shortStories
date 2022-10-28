@@ -3,54 +3,35 @@ import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
 import { storeValueIsStoreObject } from "@apollo/client/cache/inmemory/helpers";
 
-const SearchBar: React.FC = () => {
-  const GET_POST_INVENTORY = gql`
-    query getQuoteInventory {
-      getPost {
-        _id
-        id
-        title
-        body
-        userId
-        tags
-        reactions
-      }
+// const SearchBar: React.FC = () => {
+const GET_POST_INVENTORY = gql`
+  query getQuoteInventory($tag: String, $input: String) {
+    getPost(tag: $tag, input: $input) {
+      _id
+      id
+      title
+      body
+      userId
+      tags
+      reactions
     }
-  `;
+  }
+`;
 
-  //dataen det søkes blant:
-  const { loading, data } = useQuery(GET_POST_INVENTORY);
-
-  //storyList settes til å være dataen det søkes blant, nemlig stories (som er definert over)
-  const [storyList, setStoryList] = React.useState<
-    | {
-        _id: String;
-        id: Number;
-        title: String;
-        body: String;
-        userId: Number;
-        tags: Array<String>;
-        reactions: Number;
-      }[]
-    | undefined
-  >(data);
+export function Search() {
+  const [searchText, setSearchText] = React.useState<string>("");
+  const [input, setInput] = React.useState<string>("");
+  const { loading, data } = useQuery(GET_POST_INVENTORY, {
+    variables: { tag: null, input: input },
+  });
 
   console.log("DataInventory", GET_POST_INVENTORY);
 
-  const [searchText, setSearchText] = React.useState<string>("");
-
   //funksjon som kalles på når det Search-button trykkes på.
-  const handleOnClick = () => {
-    //finner story (eller storyene) som har tittelen som det søkes på. dersom storyList ikke er satt eller lengden på storyList ikke er større enn null, så settes findStories til å være undefined.
-    const findStories =
-      storyList && storyList?.length > 0
-        ? storyList?.filter((u) => u?.title === searchText)
-        : undefined;
-
-    console.log(findStories);
-
-    //storyList som skal vises settes til å være søkeresultatet fra findStories
-    setStoryList(findStories);
+  const handleOnClick = (ev: any) => {
+    ev.preventDefault();
+    setInput(searchText);
+    console.log(searchText);
   };
 
   const [readMore, setReadMore] = useState(false);
@@ -80,7 +61,7 @@ const SearchBar: React.FC = () => {
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
-              setStoryList(data);
+              // setStoryList(data);
             }}
           />
 
@@ -195,6 +176,5 @@ const SearchBar: React.FC = () => {
       <footer></footer>
     </div>
   );
-};
-
-export default SearchBar;
+}
+export default Search;
