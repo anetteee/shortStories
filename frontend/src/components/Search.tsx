@@ -1,39 +1,20 @@
 import React, { useState } from "react";
 import "./Search.css";
-import { useQuery, gql } from "@apollo/client";
-import { storeValueIsStoreObject } from "@apollo/client/cache/inmemory/helpers";
+import { useQuery, gql, useMutation } from "@apollo/client";
+import Story from "./Story";
+import { GET_POST_INVENTORY } from "../queries/Queries";
+import { FetchResult, Post } from "./Types";
 
 const SearchBar: React.FC = () => {
-  const GET_POST_INVENTORY = gql`
-    query getQuoteInventory {
-      getPost {
-        _id
-        id
-        title
-        body
-        userId
-        tags
-        reactions
-      }
-    }
-  `;
 
   //dataen det søkes blant:
-  const { loading, data } = useQuery(GET_POST_INVENTORY);
+  const { loading, data } = useQuery<FetchResult>(GET_POST_INVENTORY);
 
   //storyList settes til å være dataen det søkes blant, nemlig stories (som er definert over)
   const [storyList, setStoryList] = React.useState<
-    | {
-        _id: String;
-        id: Number;
-        title: String;
-        body: String;
-        userId: Number;
-        tags: Array<String>;
-        reactions: Number;
-      }[]
+    | Post[]
     | undefined
-  >(data);
+  >(data?.getPost);
 
   console.log("DataInventory", GET_POST_INVENTORY);
 
@@ -51,13 +32,6 @@ const SearchBar: React.FC = () => {
 
     //storyList som skal vises settes til å være søkeresultatet fra findStories
     setStoryList(findStories);
-  };
-
-  const [readMore, setReadMore] = useState(false);
-
-  const [isFavorite, setIsFavorite] = useState(false);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFavorite(e.target.checked);
   };
 
   return (
@@ -85,7 +59,7 @@ const SearchBar: React.FC = () => {
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
-              setStoryList(data);
+              setStoryList(data?.getPost);
             }}
           />
           {/* bruker divs utenpå knapper for å plassere de enklere */}
@@ -142,38 +116,7 @@ const SearchBar: React.FC = () => {
         ) : (
           <div className="all-stories-div">
             {data &&
-              data.getPost?.map((inventory: any) => (
-                <div className="story-div light-gray-border">
-                  <h2>{inventory.title}</h2>
-                  {readMore
-                    ? `${inventory.body}`
-                    : `${inventory.body.substring(0, 100)}...`}
-                  <br />
-                  <div className="flex-container-bottom-row yellow-border">
-                    <div className="flex-element-read-more purple-border">
-                      <button
-                        className="read-more-btn"
-                        onClick={() => setReadMore(!readMore)}
-                      >
-                        {readMore ? "Read less" : "Read more"}
-                      </button>
-                    </div>
-                    <div className="flex-element-favorite purple-border">
-                      <div className="favorite-div red-border">
-                        <label className="favorite-label">
-                          Mark as favorite{" "}
-                        </label>
-                        <input
-                          type="checkbox"
-                          onChange={handleChange}
-                          checked={isFavorite}
-                        />
-                        <span className="checkmark"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+              data.getPost.map((inventory) => <Story inventory={inventory} />)}
           </div>
         )}
       </section>
