@@ -19,9 +19,10 @@ const GET_POST_INVENTORY = gql`
 
 export function Search() {
   const [searchText, setSearchText] = React.useState<string>("");
+  const [selects, setSelects] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
   const { loading, data } = useQuery(GET_POST_INVENTORY, {
-    variables: { tag: null, input: input },
+    variables: { tag: selects, input: input },
   });
 
   console.log("DataInventory", GET_POST_INVENTORY);
@@ -83,11 +84,25 @@ export function Search() {
           <label className="filter-label" htmlFor="filter">
             Filter stories on tag{" "}
           </label>
-          <select name="filter" id="filter-drop-down">
+          <select
+            name="filter"
+            id="filter-drop-down"
+            value={selects}
+            onChange={(e) => {
+              setSelects(e.target.value);
+            }}
+          >
             <option value="choose">Choose filter</option>
-            <option value="romance">Romance</option>
-            <option value="horror">Horror</option>
-            <option value="funny">Funny</option>
+            <option value="history">History</option>
+            <option value="crime">Crime</option>
+            <option value="english">English</option>
+            <option value="love">Love</option>
+            <option value="fiction">Fiction</option>
+            <option value="french">French</option>
+            <option value="classic">Classic</option>
+            <option value="magical">Magical</option>
+            <option value="mystery">Mystery</option>
+            <option value="american">American</option>
           </select>
         </div>
         <div className="sort-div yellow-wrapper">
