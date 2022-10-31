@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
-import { storeValueIsStoreObject } from "@apollo/client/cache/inmemory/helpers";
 
 // const SearchBar: React.FC = () => {
 const GET_POST_INVENTORY = gql`
@@ -61,7 +60,6 @@ export function Search() {
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
-              // setStoryList(data);
             }}
           />
 
@@ -147,30 +145,6 @@ export function Search() {
             {/* </tbody> */}
           </div>
         )}
-
-        {/* <h2>Title</h2>
-          <h3>
-            {readMore ? `${story}` : `${story.substring(0, 100)}...`}
-            <br />
-            <div className="bottom-row-div">
-              <button
-                className="read-more-btn"
-                onClick={() => setReadMore(!readMore)}
-              >
-                {readMore ? "Read less" : "Read more"}
-              </button>
-
-              <div className="favorite-div">
-                <label>Mark as favorite </label>
-                <input
-                  type="checkbox"
-                  onChange={handleChange}
-                  checked={isFavorite}
-                />
-                <span className="checkmark"></span>
-              </div>
-            </div>
-          </h3> */}
       </section>
 
       <footer></footer>
