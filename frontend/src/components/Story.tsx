@@ -1,4 +1,4 @@
-import { ApolloCache, DefaultContext, MutationFunctionOptions, OperationVariables, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { DECREASE_REACTION, INCREMENT_REACTION } from "../queries/Queries";
 import { StoryProps} from "./Types";
@@ -10,12 +10,14 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
     const [increaseReaction] = useMutation(INCREMENT_REACTION);
     const [decreaseReaction] = useMutation(DECREASE_REACTION);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
+        console.log(inventory.id);
         setIsFavorite(e.target.checked);
-        if (isFavorite === true) {
-            increaseReaction
+        console.log(e.target.checked);
+        if (e.target.checked === true) {
+            increaseReaction( {variables: {incrementReactionsId: inventory.id}});
         }
         else {
-            decreaseReaction
+            decreaseReaction({ variables: {decreaseReactionsId: inventory.id} });
         }
     };
 
@@ -47,6 +49,7 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
                 onChange={handleChange}
               />
               <span className="checkmark"></span>
+              <label> {inventory.reactions}</label> 
             </div>
           </div>
         </div>

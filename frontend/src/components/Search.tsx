@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "./Search.css";
-import { useQuery, gql, useMutation } from "@apollo/client";
+import { useQuery} from "@apollo/client";
 import Story from "./Story";
 import { GET_POST_INVENTORY } from "../queries/Queries";
 import { FetchResult, Post } from "./Types";
 
-const SearchBar: React.FC = () => {
+const Search: React.FC = () => {
 
   //dataen det søkes blant:
   const { loading, data } = useQuery<FetchResult>(GET_POST_INVENTORY);
@@ -116,7 +116,7 @@ const SearchBar: React.FC = () => {
         ) : (
           <div className="all-stories-div">
             {data &&
-              data.getPost.map((inventory) => <Story inventory={inventory} />)}
+              data.getPost.map((inventory) => <Story key={inventory.id} inventory={inventory} />)}
           </div>
         )}
       </section>
@@ -126,4 +126,4 @@ const SearchBar: React.FC = () => {
   );
 };
 
-export default SearchBar;
+export default Search;
