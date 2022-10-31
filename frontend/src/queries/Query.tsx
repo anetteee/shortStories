@@ -1,5 +1,7 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
+import Pagination from "@mui/material/Pagination";
+import { useState } from "react";
 
 const GET_POST_INVENTORY = gql`
   query getQuoteInventory(
@@ -20,9 +22,25 @@ const GET_POST_INVENTORY = gql`
   }
 `;
 
+const GET_POST_COUNT = gql`
+  query Query {
+    getCountOfPosts
+  }
+`;
+
+const itemCount = 150;
+const pageSize = 10;
+
 export function Query() {
-  const { loading, data } = useQuery(GET_POST_INVENTORY, {
-    variables: { tag: null, sortBy: "asc", limit: 10, offset: 0 },
+  const [page, setPage] = useState(1);
+  const { loading, data, refetch } = useQuery(GET_POST_INVENTORY, {
+    variables: {
+      tag: null,
+      sortBy: "asc",
+      limit: 10,
+      offset: page - 1,
+      keepPreviousData: true,
+    },
   });
 
   console.log("DataInventory", GET_POST_INVENTORY);
@@ -60,6 +78,18 @@ export function Query() {
           </tbody>
         </table>
       )}
+      <Pagination
+        count={itemCount / pageSize}
+        onChange={(_, page) =>
+          refetch({
+            tag: null,
+            sortBy: "asc",
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
+            keepPreviousData: true,
+          })
+        }
+      />
     </div>
   );
 }
