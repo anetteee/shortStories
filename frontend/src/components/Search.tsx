@@ -1,63 +1,39 @@
 import React, { useState } from "react";
 import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
-import { storeValueIsStoreObject } from "@apollo/client/cache/inmemory/helpers";
+import Story from "./Story";
+import { FetchResult, Post } from "./Types";
 
-const SearchBar: React.FC = () => {
-  const GET_POST_INVENTORY = gql`
-    query getQuoteInventory {
-      getPost {
-        _id
-        id
-        title
-        body
-        userId
-        tags
-        reactions
-      }
+const GET_POST_INVENTORY = gql`
+  query getQuoteInventory($tag: String, $input: String) {
+    getPost(tag: $tag, input: $input) {
+      _id
+      id
+      title
+      body
+      userId
+      tags
+      reactions
     }
-  `;
+  }
+`;
 
-  //dataen det søkes blant:
-  const { loading, data } = useQuery(GET_POST_INVENTORY);
-
-  //storyList settes til å være dataen det søkes blant, nemlig stories (som er definert over)
-  const [storyList, setStoryList] = React.useState<
-    | {
-        _id: String;
-        id: Number;
-        title: String;
-        body: String;
-        userId: Number;
-        tags: Array<String>;
-        reactions: Number;
-      }[]
-    | undefined
-  >(data);
+export function Search() {
+  const [searchText, setSearchText] = React.useState<string>("");
+  const [selects, setSelects] = React.useState<string>("");
+  const [input, setInput] = React.useState<string>("");
+  const { loading, data } = useQuery<FetchResult>(GET_POST_INVENTORY, {
+    variables: { tag: selects, input: input },
+  });
 
   console.log("DataInventory", GET_POST_INVENTORY);
 
-  const [searchText, setSearchText] = React.useState<string>("");
-
-  //funksjon som kalles på når det Search-button trykkes på.
-  const handleOnClick = () => {
-    //finner story (eller storyene) som har tittelen som det søkes på. dersom storyList ikke er satt eller lengden på storyList ikke er større enn null, så settes findStories til å være undefined.
-    const findStories =
-      storyList && storyList?.length > 0
-        ? storyList?.filter((u) => u?.title === searchText)
-        : undefined;
-
-    console.log(findStories);
-
-    //storyList som skal vises settes til å være søkeresultatet fra findStories
-    setStoryList(findStories);
-  };
-
-  const [readMore, setReadMore] = useState(false);
-
-  const [isFavorite, setIsFavorite] = useState(false);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFavorite(e.target.checked);
+  //handel click on search-button
+  const handleOnClick = (ev: any) => {
+    //prevent refreash caused by form
+    ev.preventDefault();
+    setInput(searchText);
+    console.log(searchText);
   };
 
   return (
@@ -85,10 +61,8 @@ const SearchBar: React.FC = () => {
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
-              setStoryList(data);
             }}
           />
-          {/* bruker divs utenpå knapper for å plassere de enklere */}
           <div className="grid-element-three purple-border">
             <button
               className="search-btn"
@@ -101,9 +75,9 @@ const SearchBar: React.FC = () => {
           </div>
         </form>
       </section>
-      <section className="select-section blue-border">
-        <div className="grid-container-select-section yellow-border">
-          <div className="grid-element-picture purple-border">
+      <section className="select-section blue-container ">
+        <div className="grid-container-select-section yellow-wrapper">
+          <div className="gris-element-picture purple-border">
             <img
               src={process.env.PUBLIC_URL + "/stories.svg"}
               alt="Books"
@@ -113,18 +87,33 @@ const SearchBar: React.FC = () => {
             <label className="filter-label red-border" htmlFor="filter">
               Filter stories on tag{" "}
             </label>
-            <select className="filter-select red-border" id="filter-drop-down">
-              <option value="choose">Choose filter</option>
-              <option value="romance">Romance</option>
-              <option value="horror">Horror</option>
-              <option value="funny">Funny</option>
+            <select
+              className="filter-select red-border"
+              name="filter"
+              id="filter-drop-down"
+              value={selects}
+              onChange={(e) => {
+                setSelects(e.target.value);
+              }}
+            >
+              <option value="">Choose filter</option>
+              <option value="history">History</option>
+              <option value="crime">Crime</option>
+              <option value="english">English</option>
+              <option value="love">Love</option>
+              <option value="fiction">Fiction</option>
+              <option value="french">French</option>
+              <option value="classic">Classic</option>
+              <option value="magical">Magical</option>
+              <option value="mystery">Mystery</option>
+              <option value="american">American</option>
             </select>
           </div>
           <div className="grid-element-two column purple-border">
             <label className="sort-label red-border" htmlFor="sort">
               Sort stories by{" "}
             </label>
-            <select className="sort-select red-border" id="sort-drop-down">
+            <select name="sort-select red-border" id="sort-drop-down">
               <option value="default">Default</option>
               <option value="length">Length</option>
               <option value="likes">Likes</option>
@@ -142,52 +131,8 @@ const SearchBar: React.FC = () => {
         ) : (
           <div className="all-stories-div">
             {data &&
-              data.getPost?.map((inventory: any) => (
-                <div className="story-div light-gray-border">
-                  <h2>{inventory.title}</h2>
-
-                  {/*               <p className={readMore ? "p-extra-margin" : "p-no-margin"}}}> */}
-                  {readMore ? (
-                    <>
-                      <p
-                        className={readMore ? "p-extra-margin" : "p-no-margin"}
-                      >
-                        {inventory.body}
-                      </p>
-                      <p className="p-no-margin">
-                        Tags: {inventory.tags[0]}, {inventory.tags[1]}
-                      </p>
-                    </>
-                  ) : (
-                    <p className={readMore ? "p-extra-margin" : "p-no-margin"}>
-                      {inventory.body.substring(0, 100)}...
-                    </p>
-                  )}
-                  <div className="flex-container-bottom-row yellow-border">
-                    <div className="flex-element-read-more purple-border">
-                      <button
-                        className="read-more-btn"
-                        onClick={() => setReadMore(!readMore)}
-                      >
-                        {readMore ? "Read less" : "Read more"}
-                      </button>
-                    </div>
-                    <div className="flex-element-favorite purple-border">
-                      <div className="favorite-div red-border">
-                        <label className="favorite-label">
-                          Mark as favorite{" "}
-                        </label>
-                        <input
-                          className={`${inventory.id}.favorite-checkbox`}
-                          type="checkbox"
-                          onChange={handleChange}
-                          checked={isFavorite}
-                        />
-                        <span className="checkmark"></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              data.getPost.map((inventory) => (
+                <Story key={inventory.id} inventory={inventory} />
               ))}
           </div>
         )}
@@ -196,6 +141,5 @@ const SearchBar: React.FC = () => {
       <footer></footer>
     </div>
   );
-};
-
-export default SearchBar;
+}
+export default Search;
