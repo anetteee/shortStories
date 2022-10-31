@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
+import Story from "./Story";
+import { FetchResult, Post } from "./Types";
 
 const GET_POST_INVENTORY = gql`
   query getQuoteInventory($tag: String, $input: String) {
@@ -20,7 +22,7 @@ export function Search() {
   const [searchText, setSearchText] = React.useState<string>("");
   const [selects, setSelects] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
-  const { loading, data } = useQuery(GET_POST_INVENTORY, {
+  const { loading, data } = useQuery<FetchResult>(GET_POST_INVENTORY, {
     variables: { tag: selects, input: input },
   });
 
@@ -34,28 +36,26 @@ export function Search() {
     console.log(searchText);
   };
 
-  const [readMore, setReadMore] = useState(false);
-
-  const [isFavorite, setIsFavorite] = useState(false);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsFavorite(e.target.checked);
-  };
-
-  // TODO endre div til header, input, button etc. for mer sustainable kode
   return (
-    <div className="parent-container">
-      <header className="blue-container text-center">
+    <div className="parent-div light-pink-border">
+      <header className="header blue-border">
         <h1>Fantastic short stories</h1>
-        <p>Search among thousands of titles</p>
+        <p>Search among hundreds of titles</p>
       </header>
 
-      <section className="blue-container search">
-        <form className="search-form yellow-wrapper" action="search-form">
-          <label className="search-label purple-container" htmlFor="">
+      <section className="search-section blue-border">
+        <form
+          className="search-form grid-container-search-form yellow-border"
+          action="search-form"
+        >
+          <label
+            className="search-label grid-element-one purple-border"
+            htmlFor=""
+          >
             Search by title
           </label>
           <input
-            className="search-input purple-container"
+            className="search-input grid-element-two purple-border"
             type="text"
             placeholder=" Search..."
             value={searchText}
@@ -63,8 +63,7 @@ export function Search() {
               setSearchText(e.target.value);
             }}
           />
-
-          <div className="purple-container">
+          <div className="grid-element-three purple-border">
             <button
               className="search-btn"
               disabled={!searchText}
@@ -76,92 +75,69 @@ export function Search() {
           </div>
         </form>
       </section>
-      <section className="filter-and-sort-div blue-container ">
-        <div className="book-img-div yellow-wrapper">
-          <img src={process.env.PUBLIC_URL + "/stories.svg"} alt="Books"></img>
-        </div>
-        <div className="filter-div yellow-wrapper">
-          <label className="filter-label" htmlFor="filter">
-            Filter stories on tag{" "}
-          </label>
-          <select
-            name="filter"
-            id="filter-drop-down"
-            value={selects}
-            onChange={(e) => {
-              setSelects(e.target.value);
-            }}
-          >
-            <option value="choose">Choose filter</option>
-            <option value="history">History</option>
-            <option value="crime">Crime</option>
-            <option value="english">English</option>
-            <option value="love">Love</option>
-            <option value="fiction">Fiction</option>
-            <option value="french">French</option>
-            <option value="classic">Classic</option>
-            <option value="magical">Magical</option>
-            <option value="mystery">Mystery</option>
-            <option value="american">American</option>
-          </select>
-        </div>
-        <div className="sort-div yellow-wrapper">
-          <label htmlFor="sort">Sort stories by </label>
-          <select name="sort" id="sort-drop-down">
-            <option value="default">Default</option>
-            <option value="length">Length</option>
-            <option value="likes">Likes</option>
-            <option value="title">Title</option>
-          </select>
+      <section className="select-section blue-container ">
+        <div className="grid-container-select-section yellow-wrapper">
+          <div className="gris-element-picture purple-border">
+            <img
+              src={process.env.PUBLIC_URL + "/stories.svg"}
+              alt="Books"
+            ></img>
+          </div>
+          <div className="grid-element-one column purple-border">
+            <label className="filter-label red-border" htmlFor="filter">
+              Filter stories on tag{" "}
+            </label>
+            <select
+              className="filter-select red-border"
+              name="filter"
+              id="filter-drop-down"
+              value={selects}
+              onChange={(e) => {
+                setSelects(e.target.value);
+              }}
+            >
+              <option value="">Choose filter</option>
+              <option value="history">History</option>
+              <option value="crime">Crime</option>
+              <option value="english">English</option>
+              <option value="love">Love</option>
+              <option value="fiction">Fiction</option>
+              <option value="french">French</option>
+              <option value="classic">Classic</option>
+              <option value="magical">Magical</option>
+              <option value="mystery">Mystery</option>
+              <option value="american">American</option>
+            </select>
+          </div>
+          <div className="grid-element-two column purple-border">
+            <label className="sort-label red-border" htmlFor="sort">
+              Sort stories by{" "}
+            </label>
+            <select name="sort-select red-border" id="sort-drop-down">
+              <option value="default">Default</option>
+              <option value="length">Length</option>
+              <option value="likes">Likes</option>
+              <option value="title">Title</option>
+            </select>
+          </div>
         </div>
       </section>
-      <section className="blue-container results">
+      <section className="result-section blue-border">
         {/* denne labelen bør legges til slik at den dukker opp når man trykker søk */}
         {/* <label>Results from search</label> */}
-
+        {}
         {loading ? (
           <h3>Loading...</h3>
         ) : (
-          <div className="orange-div">
-            {/* <tbody> */}
-            {/* inventory er alle elementene i mappingen */}
+          <div className="all-stories-div">
             {data &&
-              data.getPost?.map((inventory: any) => (
-                <div className="grey-div">
-                  <h2>{inventory.title}</h2>
-                  {/* <div> */}
-                  {readMore
-                    ? `${inventory.body}`
-                    : `${inventory.body.substring(0, 100)}...`}
-                  <br />
-                  <div className="bottom-row-div">
-                    <button
-                      className="read-more-btn"
-                      onClick={() => setReadMore(!readMore)}
-                    >
-                      {readMore ? "Read less" : "Read more"}
-                    </button>
-
-                    <div className="favorite-div">
-                      <label className="favorite-label">
-                        Mark as favorite{" "}
-                      </label>
-                      <input
-                        type="checkbox"
-                        onChange={handleChange}
-                        checked={isFavorite}
-                      />
-                      <span className="checkmark"></span>
-                    </div>
-                  </div>
-                  {/* </div> */}
-                </div>
+              data.getPost.map((inventory) => (
+                <Story key={inventory.id} inventory={inventory} />
               ))}
-            {/* </tbody> */}
           </div>
         )}
       </section>
-
+      {/* ha med eller droppe footer ?  */}
       <footer></footer>
     </div>
   );
