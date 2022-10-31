@@ -42,9 +42,16 @@ p {
 label {
   font-size: clamp(10px, 11px + 6vw, 17px );
   padding-bottom: 1%;
-
 }
 
+.p-extra-margin {
+  margin-bottom: 20px;
+  font-size: clamp(5px, 5px + 5vw, 18px );
+}
+.p-no-margin {
+  margin-bottom: 0px;
+  font-size: clamp(5px, 5px + 5vw, 18px );
+}
 
 /* images */
 

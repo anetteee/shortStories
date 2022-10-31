@@ -145,10 +145,24 @@ const SearchBar: React.FC = () => {
               data.getPost?.map((inventory: any) => (
                 <div className="story-div light-gray-border">
                   <h2>{inventory.title}</h2>
-                  {readMore
-                    ? `${inventory.body}`
-                    : `${inventory.body.substring(0, 100)}...`}
-                  <br />
+
+                  {/*               <p className={readMore ? "p-extra-margin" : "p-no-margin"}}}> */}
+                  {readMore ? (
+                    <>
+                      <p
+                        className={readMore ? "p-extra-margin" : "p-no-margin"}
+                      >
+                        {inventory.body}
+                      </p>
+                      <p className="p-no-margin">
+                        Tags: {inventory.tags[0]}, {inventory.tags[1]}
+                      </p>
+                    </>
+                  ) : (
+                    <p className={readMore ? "p-extra-margin" : "p-no-margin"}>
+                      {inventory.body.substring(0, 100)}...
+                    </p>
+                  )}
                   <div className="flex-container-bottom-row yellow-border">
                     <div className="flex-element-read-more purple-border">
                       <button
@@ -164,6 +178,7 @@ const SearchBar: React.FC = () => {
                           Mark as favorite{" "}
                         </label>
                         <input
+                          className={`${inventory.id}.favorite-checkbox`}
                           type="checkbox"
                           onChange={handleChange}
                           checked={isFavorite}
