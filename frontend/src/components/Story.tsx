@@ -7,11 +7,16 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
     const [readMore, setReadMore] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
 
-    const [increaseReaction]= useMutation(INCREMENT_REACTION);
+    const [increaseReaction] = useMutation(INCREMENT_REACTION);
     const [decreaseReaction] = useMutation(DECREASE_REACTION);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
         setIsFavorite(e.target.checked);
-        return isFavorite
+        if (isFavorite === true) {
+            increaseReaction
+        }
+        else {
+            decreaseReaction
+        }
     };
 
     return (
