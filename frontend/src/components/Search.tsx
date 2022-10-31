@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
 
-// const SearchBar: React.FC = () => {
 const GET_POST_INVENTORY = gql`
   query getQuoteInventory($tag: String, $input: String) {
     getPost(tag: $tag, input: $input) {
@@ -27,8 +26,9 @@ export function Search() {
 
   console.log("DataInventory", GET_POST_INVENTORY);
 
-  //funksjon som kalles på når det Search-button trykkes på.
+  //handel click on search-button
   const handleOnClick = (ev: any) => {
+    //prevent refreash caused by form
     ev.preventDefault();
     setInput(searchText);
     console.log(searchText);
