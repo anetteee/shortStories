@@ -10,9 +10,7 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
     const [increaseReaction] = useMutation(INCREMENT_REACTION);
     const [decreaseReaction] = useMutation(DECREASE_REACTION);
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => { 
-        console.log(inventory.id);
         setIsFavorite(e.target.checked);
-        console.log(e.target.checked);
         if (e.target.checked === true) {
             increaseReaction( {variables: {incrementReactionsId: inventory.id}});
         }
