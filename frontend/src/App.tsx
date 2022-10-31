@@ -1,15 +1,15 @@
-import React from 'react';
-import { ApolloProvider } from '@apollo/client';
+import React, { useState } from "react";
+import { ApolloProvider } from "@apollo/client";
 import { apolloClient } from "./components/apolloClient";
-import "./App.css"; 
-import HomePage from './components/HomePage';
+import "./App.css";
+import Search from "./components/Search";
 
-export const App = () => (
-  <ApolloProvider client={apolloClient}>
-    <HomePage/>
-  </ApolloProvider>
-)
+function App() {
+  return (
+    <ApolloProvider client={apolloClient}>
+      <Search />
+    </ApolloProvider>
+  );
+}
 
 export default App;
-
-
