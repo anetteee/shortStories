@@ -5,8 +5,8 @@ import Story from "./Story";
 import { FetchResult, Post } from "./Types";
 
 const GET_POST_INVENTORY = gql`
-  query getQuoteInventory($tag: String, $input: String) {
-    getPost(tag: $tag, input: $input) {
+  query getQuoteInventory($tag: String, $input: String, $sortBy: String) {
+    getPost(tag: $tag, input: $input, sortBy: $sortBy) {
       _id
       id
       title
@@ -21,9 +21,10 @@ const GET_POST_INVENTORY = gql`
 export function Search() {
   const [searchText, setSearchText] = React.useState<string>("");
   const [selects, setSelects] = React.useState<string>("");
+  const [sortFilter, setsortFilter] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
   const { loading, data } = useQuery<FetchResult>(GET_POST_INVENTORY, {
-    variables: { tag: selects, input: input },
+    variables: { tag: selects, input: input, sortBy: sortFilter },
   });
 
   console.log("DataInventory", GET_POST_INVENTORY);
@@ -111,13 +112,19 @@ export function Search() {
           </div>
           <div className="grid-element-two column purple-border">
             <label className="sort-label red-border" htmlFor="sort">
-              Sort stories by{" "}
+              Sort stories by number of likes
             </label>
-            <select name="sort-select red-border" id="sort-drop-down">
-              <option value="default">Default</option>
-              <option value="length">Length</option>
-              <option value="likes">Likes</option>
-              <option value="title">Title</option>
+            <select
+              name="sort-select red-border"
+              id="sort-drop-down"
+              value={sortFilter}
+              onChange={(e) => {
+                setsortFilter(e.target.value);
+              }}
+            >
+              <option value="">Choose filter</option>
+              <option value="asc">Ascending</option>
+              <option value="descending">Descending</option>
             </select>
           </div>
         </div>
