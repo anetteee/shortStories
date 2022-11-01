@@ -2,9 +2,18 @@ import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { DECREASE_REACTION, INCREMENT_REACTION } from "../queries/Queries";
 import { StoryProps } from "./Types";
+import { useRecoilState } from "recoil";
+import { expandedStoriesListState } from "./storyListState";
 
 const Story: React.FC<StoryProps> = ({ inventory }) => {
-  const [readMore, setReadMore] = useState(false);
+  //const listOfExpandedStories = useRecoilValue(expandedStoriesListState); //["id1", "id2"]           //getExpandedStateFromRecoil() -> ["id1", "id2", "id3"...]
+  const [expandedList, setExpandedList] = useRecoilState(
+    expandedStoriesListState
+  );
+  const index = expandedList.findIndex(
+    (listItem) => listItem === inventory._id
+  );
+  //const [readMore, setReadMore] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const [increaseReaction] = useMutation(INCREMENT_REACTION);
@@ -17,6 +26,26 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
       decreaseReaction({ variables: { decreaseReactionsId: inventory.id } });
     }
   };
+
+  const updateRecoilList = () => {
+    console.log("Updating the list :))");
+    if (expandedList.includes(inventory._id)) {
+      //Finn  funksjonen som kan kan fjerne fra en array i recoil staten. F.eks.:
+      setExpandedList((oldExpandedList) => {
+        return oldExpandedList.filter((value, i) => {
+          return i !== index;
+        });
+      });
+    } else {
+      //Finn  funksjonen som kan oppdatere staten i recoil f.eks.:
+
+      setExpandedList((oldExpandedList) => [...oldExpandedList, inventory._id]);
+    }
+  };
+
+  const readMore = expandedList.includes(inventory._id);
+  console.log(readMore);
+  console.log(expandedList);
 
   return (
     <div className="story-div light-gray-border">
@@ -43,10 +72,7 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
 
       <div className="flex-container-bottom-row yellow-border">
         <div className="flex-element-read-more purple-border">
-          <button
-            className="read-more-btn"
-            onClick={() => setReadMore(!readMore)}
-          >
+          <button className="read-more-btn" onClick={() => updateRecoilList()}>
             {readMore ? "Read less" : "Read more"}
           </button>
         </div>
