@@ -85,7 +85,6 @@ export function Search() {
           <div className="grid-element-three purple-border">
             <button
               className="search-btn"
-              disabled={!searchText}
               onClick={handleOnClick}
               font-style="Gill Sans"
             >
