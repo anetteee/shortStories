@@ -11,24 +11,20 @@ const GET_POST_INVENTORY = gql`
     $offset: Int
   ) {
     getPost(tag: $tag, sortBy: $sortBy, limit: $limit, offset: $offset) {
-      _id
-      id
-      title
-      body
-      userId
-      tags
-      reactions
+      posts {
+        _id
+        id
+        title
+        body
+        userId
+        tags
+        reactions
+      }
+      count
     }
   }
 `;
 
-const GET_POST_COUNT = gql`
-  query Query {
-    getCountOfPosts
-  }
-`;
-
-const itemCount = 150;
 const pageSize = 10;
 
 export function Query() {
@@ -64,7 +60,7 @@ export function Query() {
           </thead>
           <tbody>
             {data &&
-              data.getPost?.map((inventory: any) => (
+              data.getPost.posts?.map((inventory: any) => (
                 <tr>
                   <td>{inventory._id}</td>
                   <td>{inventory.id}</td>
@@ -79,7 +75,7 @@ export function Query() {
         </table>
       )}
       <Pagination
-        count={itemCount / pageSize}
+        count={data.getPost.count / pageSize}
         onChange={(_, page) =>
           refetch({
             tag: null,
