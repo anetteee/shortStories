@@ -2,8 +2,8 @@ import React from "react";
 import { useQuery, gql } from "@apollo/client";
 
 const GET_POST_INVENTORY = gql`
-  query getQuoteInventory($tag: String) {
-    getPost(tag: $tag) {
+  query getQuoteInventory($tag: String, $sortBy: String) {
+    getPost(tag: $tag, sortBy: $sortBy) {
       _id
       id
       title
@@ -17,7 +17,7 @@ const GET_POST_INVENTORY = gql`
 
 export function Query() {
   const { loading, data } = useQuery(GET_POST_INVENTORY, {
-    variables: { tag: null },
+    variables: { tag: null, sortBy: "asc" },
   });
 
   console.log("DataInventory", GET_POST_INVENTORY);
