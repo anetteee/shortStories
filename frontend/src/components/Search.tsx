@@ -25,14 +25,11 @@ export function Search() {
     },
   });
 
-  console.log("DataInventory", GET_POST_INVENTORY);
-
   //handel click on search-button
   const handleOnClick = (ev: any) => {
     //prevent refreash caused by form
     ev.preventDefault();
     setInput(searchText);
-    console.log(searchText);
   };
 
   return (
