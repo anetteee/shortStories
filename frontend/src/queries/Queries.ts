@@ -39,15 +39,23 @@ export const DECREASE_REACTION = gql`
   `;
 
 export const GET_POST_INVENTORY = gql`
-query getQuoteInventory {
-  getPost {
-    _id
-    id
-    title
-    body
-    userId
-    tags
-    reactions
-  }
+query getQuoteInventory(
+  $tag: String
+  $sortBy: String
+  $limit: Int
+  $offset: Int
+) {
+  getPost(tag: $tag, sortBy: $sortBy, limit: $limit, offset: $offset) {
+    posts {
+     _id
+     id
+     title
+     body
+     userId
+     tags
+     reactions
+   }
+   count
+ }
 }
 `;

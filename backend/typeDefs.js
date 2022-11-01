@@ -13,7 +13,17 @@ const typeDefs = gql`
   }
 
   type Query {
-    getPost(tag: String, input: String, sortBy: String): [Post!]
+    getPost(
+      tag: String
+      input: String
+      sortBy: String
+      limit: Int
+      offset: Int
+    ): GetPostResponse!
+  }
+  type GetPostResponse {
+    posts: [Post]
+    count: Int!
   }
   type Mutation {
     incrementReaction(id: Int): IncrementReactionResponse!
