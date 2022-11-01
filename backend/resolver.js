@@ -4,6 +4,7 @@ const resolver = {
   Query: {
     getPost: async (parent, args, context, info) => {
       let data;
+      let count = 0;
 
       //sets the sort orders for sorting on the queries
       let sortOrder = -1; //sets standard as descending
@@ -30,6 +31,11 @@ const resolver = {
           .sort({ reactions: sortOrder })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
+
+        count = await Post.find({
+          tags: args.tag,
+          title: { $regex: regExp },
+        }).count();
         //filter on tag
       } else if (args.tag != null) {
         data = await Post.find({ tags: args.tag })
@@ -38,6 +44,8 @@ const resolver = {
           })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
+
+        count = await Post.find({ tags: args.tag }).count();
         //filter on search
       } else if (args.input != null) {
         data = await Post.find({ title: { $regex: regExp } })
@@ -46,15 +54,25 @@ const resolver = {
           })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
+
+        count = await Post.find({ title: { $regex: regExp } }).count();
       } else {
         //no search or filter is chosen, sets data to all the results
         data = await Post.find()
           .sort({ reactions: sortOrder })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
+
+        count = await Post.find().count();
       }
 
-      return data;
+      let response = {
+        posts: data,
+        count,
+      };
+      console.log(response);
+
+      return response;
     },
   },
 };

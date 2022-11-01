@@ -18,7 +18,11 @@ const typeDefs = gql`
       sortBy: String
       limit: Int
       offset: Int
-    ): [Post!]
+    ): GetPostResponse!
+  }
+  type GetPostResponse {
+    posts: [Post]
+    count: Int!
   }
 `;
 
