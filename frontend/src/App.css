@@ -51,6 +51,7 @@ label {
 .p-no-margin {
   margin-bottom: 0px;
   font-size: clamp(5px, 5px + 5vw, 18px );
+  display: inline;
 }
 
 /* images */

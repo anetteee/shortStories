@@ -29,6 +29,11 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
           <p className="p-no-margin">
             Tags: {inventory.tags[0]}, {inventory.tags[1]}
           </p>
+          {inventory.tags[2] ? (
+            <p className="p-no-margin">, {inventory.tags[2]}</p>
+          ) : (
+            ""
+          )}
         </>
       ) : (
         <p className={readMore ? "p-extra-margin" : "p-no-margin"}>
