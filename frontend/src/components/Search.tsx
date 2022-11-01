@@ -77,6 +77,7 @@ export function Search() {
           <input
             className="search-input grid-element-two purple-border"
             type="text"
+            data-testId="testIdInputSearch"
             placeholder=" Search..."
             value={searchText}
             onChange={(e) => {
@@ -86,6 +87,7 @@ export function Search() {
           <div className="grid-element-three purple-border">
             <button
               className="search-btn"
+              data-testId="testIdBtnSearch"
               disabled={!searchText}
               onClick={handleOnClick}
               font-style="Gill Sans"

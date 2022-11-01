@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_POST_INVENTORY } from "../../queries/Queries";
 import { Search } from "../Search";
@@ -132,4 +132,25 @@ it("renders without error", async () => {
   expect(
     await screen.findByText("His mother had always taught him")
   ).toBeInTheDocument();
+});
+
+it("get by search", async () => {
+  render(
+    <RecoilRoot>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Search />
+      </MockedProvider>
+    </RecoilRoot>
+  );
+
+  fireEvent.input(screen.getByTestId("testIdInputSearch"), {
+    target: {
+      value: "Balloons",
+    },
+  });
+  fireEvent.submit(screen.getByTestId("testIdBtnSearch"));
+
+  expect(
+    await screen.findByText("His mother had always taught him")
+  ).not.toBeInTheDocument();
 });
