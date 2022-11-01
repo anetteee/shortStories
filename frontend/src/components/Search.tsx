@@ -75,9 +75,9 @@ export function Search() {
           </div>
         </form>
       </section>
-      <section className="select-section blue-container ">
-        <div className="grid-container-select-section yellow-wrapper">
-          <div className="gris-element-picture purple-border">
+      <section className="select-section blue-border ">
+        <div className="grid-container-select-section yellow-border">
+          <div className="grid-element-picture purple-border">
             <img
               src={process.env.PUBLIC_URL + "/stories.svg"}
               alt="Books"

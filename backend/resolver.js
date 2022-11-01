@@ -20,22 +20,23 @@ const resolver = {
 
       //search on the whole input, caseinsensitive
       var regExp = new RegExp("\\b" + args.input + "\\b", "i");
-      if (args.tag && args.input != (null || "")) {
+      if (
+        args.tag != null &&
+        args.tag != "" &&
+        args.input != null &&
+        args.input != ""
+      ) {
         //filter on tag and search
         data = await Post.find({
           tags: args.tag,
           title: { $regex: regExp },
         }).sort({ reactions: sortOrder });
         //filter on tag
-      } else if (args.tag != (null || "")) {
-        data = await Post.find({ tags: args.tag }).sort({
-          reactions: sortOrder,
-        });
+      } else if (args.tag != "" && args.tag != null) {
+        data = await Post.find({ tags: args.tag });
         //filter on search
-      } else if (args.input != (null || "")) {
-        data = await Post.find({ title: { $regex: regExp } }).sort({
-          reactions: sortOrder,
-        });
+      } else if (args.input != null && args.input != "") {
+        data = await Post.find({ title: { $regex: regExp } });
       } else {
         //no search or filter is chosen, sets data to all the results
         data = await Post.find().sort({ reactions: sortOrder });
