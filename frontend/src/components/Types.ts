@@ -10,7 +10,12 @@ export type Post = {
 }
 
 export type FetchResult = {
-    getPost: Post[];
+    getPost: getPostResponse;
+}
+
+export type getPostResponse = {
+    posts: Post[];
+    count: number;
 }
 
 export type StoryProps = {
