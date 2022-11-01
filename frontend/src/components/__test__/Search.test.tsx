@@ -3,18 +3,19 @@ import { render, screen } from "@testing-library/react";
 import { MockedProvider } from "@apollo/client/testing";
 import { GET_POST_INVENTORY } from "../../queries/Queries";
 import { Search } from "../Search";
+import { RecoilRoot } from "recoil";
 
 const mocks = [
   {
     request: {
       query: GET_POST_INVENTORY,
       variables: {
-        tag: null,
+        tag: "",
         limit: 10,
         offset: 0,
         keepPreviousData: true,
-        input: null,
-        sortBy: null,
+        input: "",
+        sortBy: "",
       },
     },
     result: {
@@ -40,12 +41,14 @@ const mocks = [
 
 it("renders without error", async () => {
   render(
-    <MockedProvider mocks={mocks} addTypename={false}>
-      <Search />
-    </MockedProvider>
+    <RecoilRoot>
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <Search />
+      </MockedProvider>
+    </RecoilRoot>
   );
   expect(await screen.findByText("Loading...")).toBeInTheDocument();
-  //   expect(
-  //     await screen.findByText("Hopes and dreams were dashed that day.")
-  //   ).toBeInTheDocument();
+  expect(
+    await screen.findByText("Hopes and dreams were dashed that day.")
+  ).toBeInTheDocument();
 });
