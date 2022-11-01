@@ -4,35 +4,7 @@ import { useQuery, gql } from "@apollo/client";
 import Pagination from "@mui/material/Pagination";
 import Story from "./Story";
 import { FetchResult, Post } from "./Types";
-
-const GET_POST_INVENTORY = gql`
-  query getQuoteInventory(
-    $tag: String
-    $sortBy: String
-    $limit: Int
-    $offset: Int
-    $input: String
-  ) {
-    getPost(
-      tag: $tag
-      sortBy: $sortBy
-      limit: $limit
-      offset: $offset
-      input: $input
-    ) {
-      posts {
-        _id
-        id
-        title
-        body
-        userId
-        tags
-        reactions
-      }
-      count
-    }
-  }
-`;
+import { GET_POST_INVENTORY } from "../queries/Queries";
 
 const pageSize = 10;
 
@@ -157,14 +129,14 @@ export function Search() {
         ) : (
           <div className="all-stories-div">
             {data &&
-              data.getPost.map((inventory) => (
+              data.getPost.posts.map((inventory) => (
                 <Story key={inventory.id} inventory={inventory} />
               ))}
           </div>
         )}
       </section>
       <Pagination
-        count={data.getPost.count / pageSize}
+        count={data && data.getPost.count / pageSize}
         onChange={(_, page) =>
           refetch({
             tag: null,
