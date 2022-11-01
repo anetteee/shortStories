@@ -1,29 +1,55 @@
 import React, { useState } from "react";
 import "./Search.css";
 import { useQuery, gql } from "@apollo/client";
+import Pagination from "@mui/material/Pagination";
 import Story from "./Story";
 import { FetchResult, Post } from "./Types";
 
 const GET_POST_INVENTORY = gql`
-  query getQuoteInventory($tag: String, $input: String) {
-    getPost(tag: $tag, input: $input) {
-      _id
-      id
-      title
-      body
-      userId
-      tags
-      reactions
+  query getQuoteInventory(
+    $tag: String
+    $sortBy: String
+    $limit: Int
+    $offset: Int
+    $input: String
+  ) {
+    getPost(
+      tag: $tag
+      sortBy: $sortBy
+      limit: $limit
+      offset: $offset
+      input: $input
+    ) {
+      posts {
+        _id
+        id
+        title
+        body
+        userId
+        tags
+        reactions
+      }
+      count
     }
   }
 `;
 
+const pageSize = 10;
+
 export function Search() {
+  const [page, setPage] = useState(1);
   const [searchText, setSearchText] = React.useState<string>("");
   const [selects, setSelects] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
-  const { loading, data } = useQuery<FetchResult>(GET_POST_INVENTORY, {
-    variables: { tag: selects, input: input },
+  const { loading, data, refetch } = useQuery<FetchResult>(GET_POST_INVENTORY, {
+    variables: {
+      tag: selects,
+      sortBy: "asc",
+      limit: 10,
+      offset: page - 1,
+      keepPreviousData: true,
+      input: input,
+    },
   });
 
   console.log("DataInventory", GET_POST_INVENTORY);
@@ -137,6 +163,18 @@ export function Search() {
           </div>
         )}
       </section>
+      <Pagination
+        count={data.getPost.count / pageSize}
+        onChange={(_, page) =>
+          refetch({
+            tag: null,
+            sortBy: "asc",
+            limit: pageSize,
+            offset: (page - 1) * pageSize,
+            keepPreviousData: true,
+          })
+        }
+      />
       {/* ha med eller droppe footer ?  */}
       <footer></footer>
     </div>
