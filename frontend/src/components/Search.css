@@ -1,29 +1,5 @@
-/* BORDERS */
-/* .light-pink-border {
-    border: 3px solid pink; 
-}
-.blue-border {
-    border: 1px solid rgb(99, 185, 255);
-}  */
-
-/* GRID-BORDERS */
-/* .yellow-border {
-    border: 1px solid rgb(255, 238, 111);
-}
-.purple-border {
-    border: 1px solid rgb(170, 147, 208);
-} */
-/* .red-border {
-    border: 1px solid red;
-} */
-
-/* BORDER around STORIES */
-.light-gray-border { 
-    border: 2px solid lightgray;
-}
-
 .parent-div {
-    /* setter innholdet på siden til å være sentrert */
+    /* centers content */
     margin: auto;
     max-width: 700px;
     padding: 15px;
@@ -42,13 +18,13 @@
     grid-template-columns: repeat(5, 20%);
 }
 .grid-element-one {
-    /* filter-delen være på rad nummer en og dekke kolonne 1-5 */
+    /* filter box is placed on row number one and columns 1-5 */
     grid-row: 1;
     grid-column: 1/5; 
     margin-right: 0.5%;
 }
 .grid-element-two {
-    /* sort-delen være på rad nummer to og dekke kolonne 1-5 */
+    /* sort box is placed on row number two and columns 1-5*/
     grid-row: 2;
     grid-column: 1/5;  
     margin-right: 0.5%;
@@ -56,16 +32,16 @@
 .grid-element-three {
     grid-row:  2;
     grid-column: 5 / 5;
-    /* ka gjer dissa to her:???? */
-    outline: none;
-    display: inline-block;
+
+    /* outline: none; */
+    /* display: inline-block; */
 }
 .grid-element-picture {
     grid-row:  1/3;
     grid-column: 5 / 5;
 }
 .column {
-    /* sørger for at label og drop-down vises på hver sin rad */
+    /* places label and drop-down on different rows */
     display: flex;
     flex-direction: column;
 }
@@ -104,9 +80,34 @@
 }
 
 /* RESULTS */
+.result-label-div {
+    text-align: center;
+    margin-bottom: 2%;
+}
+.result-label {
+    font-size: clamp(10px, 11px + 6vw, 23px );
+    vertical-align: middle;
+}
+.not-found {
+    text-align: center;
+}
+.all-stories-div {
+    margin-top: 1%;
+}
 .story-div {
+    border: 2px solid lightgray;
     margin-bottom: 1.5%;
     padding: 2%;
+}
+.pagination-div {
+    display: flex;
+    align-items: center;
+    margin-top: 2.5%;
+}
+.paginationItemStyle {
+    margin: auto;
+    margin-top: 0.5%;
+    background-color: white !important;
 }
 
 /* FLEX */
@@ -121,9 +122,8 @@
     padding-top: 0.25em;
 }
 .read-more-btn {
-     /* makes button fill the entire width of its container 
-     Og det e width:100% som sørger for at knappen ikke går utenfor containeren 
-     sin når vi minimerer siden*/
+     /* makes button fill the entire width of its container. 
+     width:100% makes sure the button stays inside its container when we resize width of screen*/
      width: 100%;
      background-color: #f4f4f4; 
      border:1px solid #63ae59;
@@ -147,7 +147,7 @@
 
 
 @media (max-width: 40em) {        
-    /* når skjermen blir mindre så skal bildet, filter-select og sort-select elementene plasseres i hver sin rad */
+    /* when screen minimizes: picture, filter-select and sort-select gets placed in different rows */
     .grid-container-select-section {
         display: block;
         padding: 0;
@@ -157,16 +157,12 @@
         margin-bottom: 1em;
     }
     img {
-        /* gjøres for å unngå at bildet blir kjempestort */
+        /* to avoid a really big picture */
         max-height: 100px;
-        /* sentrerer bildet i midten ved å skrive: */
+        /* to center picture */
         margin: auto;
         padding-top: 0;
     }
-}
-
-.notFound {
-    text-align: center;
 }
 
 /* BOTTOM ROW */
@@ -175,9 +171,8 @@
         flex-direction: column;
     }
     .flex-element-favorite {
-
         width: 100%;
-        /* for å få align-items til å fungere så må det skrives display:flex først */
+        /* in order to have align-items to work, write display:flex first */
         display: flex;
         align-items: center;
     }

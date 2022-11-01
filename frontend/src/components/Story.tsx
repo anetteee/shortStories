@@ -28,7 +28,7 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
   };
 
   const updateRecoilList = () => {
-    console.log("Updating the list :))");
+    // console.log("Updating the list :))");
     if (expandedList.includes(inventory._id)) {
       //Finn  funksjonen som kan kan fjerne fra en array i recoil staten. F.eks.:
       setExpandedList((oldExpandedList) => {
@@ -44,8 +44,8 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
   };
 
   const readMore = expandedList.includes(inventory._id);
-  console.log(readMore);
-  console.log(expandedList);
+  // console.log(readMore);
+  // console.log(expandedList);
 
   return (
     <div className="story-div light-gray-border">
