@@ -30,11 +30,12 @@ export function Search() {
     setPageNumber(page);
     let newOffset;
     if (page < pageNumber) {
-      newOffset = offset - (page - 1) * pageSize;
+      newOffset = (page - 1) * pageSize;
     } else {
-      newOffset = offset + (page - 1) * pageSize;
+      newOffset = (page - 1) * pageSize;
     }
     setOffset(newOffset);
+
     refetch({
       tag: selects,
       sortBy: sortFilter,
@@ -43,6 +44,7 @@ export function Search() {
       input: input,
       keepPreviousData: true,
     });
+    //console.log(data?.getPost.count);
   };
 
   //handel click on search-button
@@ -162,7 +164,7 @@ export function Search() {
         )}
       </section>
       <Pagination
-        count={data && data.getPost.count / pageSize}
+        count={data && Math.ceil(data.getPost.count / pageSize)}
         onChange={(event, page) => handlePageClick(event, page)}
       />
       {/* ha med eller droppe footer ?  */}

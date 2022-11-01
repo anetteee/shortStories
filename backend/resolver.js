@@ -32,7 +32,7 @@ const resolver = {
           tags: args.tag,
           title: { $regex: regExp },
         })
-          .sort({ reactions: sortOrder })
+          .sort({ reactions: sortOrder, _id: 1 })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
 
@@ -45,6 +45,7 @@ const resolver = {
         data = await Post.find({ tags: args.tag })
           .sort({
             reactions: sortOrder,
+            _id: 1,
           })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
@@ -55,6 +56,7 @@ const resolver = {
         data = await Post.find({ title: { $regex: regExp } })
           .sort({
             reactions: sortOrder,
+            _id: 1,
           })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
@@ -63,7 +65,7 @@ const resolver = {
       } else {
         //no search or filter is chosen, sets data to all the results
         data = await Post.find()
-          .sort({ reactions: sortOrder })
+          .sort({ reactions: sortOrder, _id: 1 })
           .limit(parseInt(args.limit))
           .skip(parseInt(args.offset));
 
