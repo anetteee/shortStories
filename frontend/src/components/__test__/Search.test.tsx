@@ -1,11 +1,11 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { MockedProvider } from "@apollo/client/testing";
+import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { GET_POST_INVENTORY } from "../../queries/Queries";
 import { Search } from "../Search";
 import { RecoilRoot } from "recoil";
 
-const mocks = [
+const mocks1 = [
   {
     request: {
       query: GET_POST_INVENTORY,
@@ -120,10 +120,27 @@ const mocks = [
   },
 ];
 
+const mocks2 = [
+  {
+    request: {
+      query: GET_POST_INVENTORY,
+      variables: {
+        tag: "",
+        limit: 10,
+        offset: 0,
+        keepPreviousData: true,
+        input: "",
+        sortBy: "",
+      },
+    },
+    result: undefined,
+  },
+];
+
 it("renders without error", async () => {
   render(
     <RecoilRoot>
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks1} addTypename={false}>
         <Search />
       </MockedProvider>
     </RecoilRoot>
@@ -134,23 +151,13 @@ it("renders without error", async () => {
   ).toBeInTheDocument();
 });
 
-it("get by search", async () => {
+it("returns no post found message", async () => {
   render(
     <RecoilRoot>
-      <MockedProvider mocks={mocks} addTypename={false}>
+      <MockedProvider mocks={mocks2} addTypename={false}>
         <Search />
       </MockedProvider>
     </RecoilRoot>
   );
-
-  fireEvent.input(screen.getByTestId("testIdInputSearch"), {
-    target: {
-      value: "Balloons",
-    },
-  });
-  fireEvent.submit(screen.getByTestId("testIdBtnSearch"));
-
-  expect(
-    await screen.findByText("His mother had always taught him")
-  ).not.toBeInTheDocument();
+  expect(await screen.findByText("No stories available")).toBeInTheDocument();
 });
