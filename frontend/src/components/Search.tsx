@@ -44,7 +44,6 @@ export function Search() {
       input: input,
       keepPreviousData: true,
     });
-    //console.log(data?.getPost.count);
   };
 
   //handel click on search-button
@@ -54,13 +53,13 @@ export function Search() {
     setInput(searchText);
   };
 
-  console.log("limit: " + pageSize);
-  console.log("input: " + input);
+  // console.log("limit: " + pageSize);
+  // console.log("input: " + input);
   return (
     <div className="parent-div light-pink-border">
       <header className="header blue-border">
         <h1>Fantastic short stories</h1>
-        <p>Search among hundreds of titles</p>
+        <p className="p-header">Search among hundreds of titles</p>
       </header>
 
       <section className="search-section blue-border">
@@ -86,7 +85,6 @@ export function Search() {
           <div className="grid-element-three purple-border">
             <button
               className="search-btn"
-              disabled={!searchText}
               onClick={handleOnClick}
               font-style="Gill Sans"
             >
@@ -105,7 +103,7 @@ export function Search() {
           </div>
           <div className="grid-element-one column purple-border">
             <label className="filter-label red-border" htmlFor="filter">
-              Filter stories on tag{" "}
+              Filter stories{" "}
             </label>
             <select
               className="filter-select red-border"
@@ -116,7 +114,7 @@ export function Search() {
                 setSelects(e.target.value);
               }}
             >
-              <option value="">Choose filter</option>
+              <option value="">Select one</option>
               <option value="history">History</option>
               <option value="crime">Crime</option>
               <option value="english">English</option>
@@ -131,42 +129,51 @@ export function Search() {
           </div>
           <div className="grid-element-two column purple-border">
             <label className="sort-label red-border" htmlFor="sort">
-              Sort stories by number of likes
+              Sort stories
             </label>
             <select
-              name="sort-select red-border"
+              className="sort-select red-border"
               id="sort-drop-down"
               value={sortFilter}
               onChange={(e) => {
                 setsortFilter(e.target.value);
               }}
             >
-              <option value="">Choose filter</option>
-              <option value="asc">Ascending</option>
-              <option value="descending">Descending</option>
+              <option value="">Select one</option>
+              <option value="asc">From least to most likes</option>
+              <option value="descending">From most to least likes</option>
             </select>
           </div>
         </div>
       </section>
       <section className="result-section blue-border">
-        {/* denne labelen bør legges til slik at den dukker opp når man trykker søk */}
-        {/* <label>Results from search</label> */}
-        {}
+        <div className="result-label-div yellow-border ">
+          <label className="result-label ">Results from search</label>
+        </div>
         {loading ? (
           <h3>Loading...</h3>
         ) : (
           <div className="all-stories-div">
+            {data && data.getPost.posts?.length === 0 && (
+              <p className="not-found story-div light-gray-border">
+                Found no stories matching your search and choice of filter
+              </p>
+            )}
             {data &&
               data.getPost.posts.map((inventory) => (
                 <Story key={inventory.id} inventory={inventory} />
               ))}
           </div>
         )}
+        <div className="pagination-div yellow-border">
+          <Pagination
+            count={data && Math.ceil(data.getPost.count / pageSize)}
+            onChange={(event, page) => handlePageClick(event, page)}
+            className="paginationItemStyle red-border"
+          />
+        </div>
       </section>
-      <Pagination
-        count={data && Math.ceil(data.getPost.count / pageSize)}
-        onChange={(event, page) => handlePageClick(event, page)}
-      />
+
       {/* ha med eller droppe footer ?  */}
       <footer></footer>
     </div>
