@@ -8,12 +8,10 @@ const resolver = {
 
       //sets the sort orders for sorting on the queries
       let sortOrder = -1; //sets standard as descending
-      if (args.sortBy != null) {
-        if (args.sortBy === "asc") {
-          sortOrder = 1; //sets ascending
-        } else {
-          sortOrder = -1; //sets descending
-        }
+      if (args.sortBy === "asc") {
+        sortOrder = 1; //sets ascending
+      } else {
+        sortOrder = -1; //sets descending
       }
 
       //returns data based on inputs and sorts by wanted order
