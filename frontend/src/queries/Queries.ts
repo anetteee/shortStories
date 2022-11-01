@@ -44,8 +44,9 @@ query getQuoteInventory(
   $sortBy: String
   $limit: Int
   $offset: Int
+  $input: String
 ) {
-  getPost(tag: $tag, sortBy: $sortBy, limit: $limit, offset: $offset) {
+  getPost(tag: $tag, sortBy: $sortBy, limit: $limit, offset: $offset, input: $input ) {
     posts {
      _id
      id

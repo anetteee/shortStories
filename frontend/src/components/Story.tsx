@@ -47,7 +47,7 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
         </div>
         <div className="flex-element-favorite purple-border">
           <div className="favorite-div red-border">
-            <label className="favorite-label">Mark as favorite </label>
+            <label className="favorite-label">Like </label>
             <input
               type="checkbox"
               checked={isFavorite}

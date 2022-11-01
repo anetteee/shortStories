@@ -12,26 +12,24 @@ export function Search() {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = React.useState<string>("");
   const [selects, setSelects] = React.useState<string>("");
+  const [sortFilter, setsortFilter] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
   const { loading, data, refetch } = useQuery<FetchResult>(GET_POST_INVENTORY, {
     variables: {
       tag: selects,
-      sortBy: "asc",
       limit: 10,
       offset: page - 1,
       keepPreviousData: true,
       input: input,
+      sortBy: sortFilter,
     },
   });
-
-  console.log("DataInventory", GET_POST_INVENTORY);
 
   //handel click on search-button
   const handleOnClick = (ev: any) => {
     //prevent refreash caused by form
     ev.preventDefault();
     setInput(searchText);
-    console.log(searchText);
   };
 
   return (
@@ -109,13 +107,19 @@ export function Search() {
           </div>
           <div className="grid-element-two column purple-border">
             <label className="sort-label red-border" htmlFor="sort">
-              Sort stories by{" "}
+              Sort stories by number of likes
             </label>
-            <select name="sort-select red-border" id="sort-drop-down">
-              <option value="default">Default</option>
-              <option value="length">Length</option>
-              <option value="likes">Likes</option>
-              <option value="title">Title</option>
+            <select
+              name="sort-select red-border"
+              id="sort-drop-down"
+              value={sortFilter}
+              onChange={(e) => {
+                setsortFilter(e.target.value);
+              }}
+            >
+              <option value="">Choose filter</option>
+              <option value="asc">Ascending</option>
+              <option value="descending">Descending</option>
             </select>
           </div>
         </div>
