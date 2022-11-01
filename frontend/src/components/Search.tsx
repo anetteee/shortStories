@@ -9,21 +9,41 @@ import { GET_POST_INVENTORY } from "../queries/Queries";
 const pageSize = 10;
 
 export function Search() {
-  const [page, setPage] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
   const [searchText, setSearchText] = React.useState<string>("");
   const [selects, setSelects] = React.useState<string>("");
   const [sortFilter, setsortFilter] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
+  const [offset, setOffset] = React.useState(0);
   const { loading, data, refetch } = useQuery<FetchResult>(GET_POST_INVENTORY, {
     variables: {
       tag: selects,
-      limit: 10,
-      offset: page - 1,
+      limit: pageSize,
+      offset: 0,
       keepPreviousData: true,
       input: input,
       sortBy: sortFilter,
     },
   });
+
+  const handlePageClick = (event: React.ChangeEvent<unknown>, page: number) => {
+    setPageNumber(page);
+    let newOffset;
+    if (page < pageNumber) {
+      newOffset = offset - (page - 1) * pageSize;
+    } else {
+      newOffset = offset + (page - 1) * pageSize;
+    }
+    setOffset(newOffset);
+    refetch({
+      tag: selects,
+      sortBy: sortFilter,
+      limit: pageSize,
+      offset: newOffset,
+      input: input,
+      keepPreviousData: true,
+    });
+  };
 
   //handel click on search-button
   const handleOnClick = (ev: any) => {
@@ -32,6 +52,8 @@ export function Search() {
     setInput(searchText);
   };
 
+  console.log("limit: " + pageSize);
+  console.log("input: " + input);
   return (
     <div className="parent-div light-pink-border">
       <header className="header blue-border">
@@ -141,15 +163,7 @@ export function Search() {
       </section>
       <Pagination
         count={data && data.getPost.count / pageSize}
-        onChange={(_, page) =>
-          refetch({
-            tag: null,
-            sortBy: "asc",
-            limit: pageSize,
-            offset: (page - 1) * pageSize,
-            keepPreviousData: true,
-          })
-        }
+        onChange={(event, page) => handlePageClick(event, page)}
       />
       {/* ha med eller droppe footer ?  */}
       <footer></footer>
