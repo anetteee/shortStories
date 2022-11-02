@@ -74,6 +74,7 @@ export function Search() {
             Search by title
           </label>
           <input
+            data-testid="search-input"
             className="search-input grid-element-two purple-border"
             type="text"
             placeholder=" Search..."
@@ -84,6 +85,7 @@ export function Search() {
           />
           <div className="grid-element-three purple-border">
             <button
+              data-testid="search-button"
               className="search-btn"
               onClick={handleOnClick}
               font-style="Gill Sans"
@@ -153,7 +155,7 @@ export function Search() {
         {loading ? (
           <h3>Loading...</h3>
         ) : (
-          <div className="all-stories-div">
+          <div className="all-stories-div ">
             {data && data.getPost.posts?.length === 0 && (
               <p className="not-found story-div light-gray-border">
                 Found no stories matching your search and choice of filter

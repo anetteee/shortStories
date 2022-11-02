@@ -48,8 +48,8 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
   // console.log(expandedList);
 
   return (
-    <div className="story-div light-gray-border">
-      <h2>{inventory.title}</h2>
+    <div className="story-div  light-gray-border">
+      <h2 data-testid="stories-list">{inventory.title}</h2>
       {readMore ? (
         <>
           <p className={readMore ? "p-extra-margin" : "p-no-margin"}>
@@ -85,7 +85,7 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
               onChange={handleChange}
             />
             <span className="checkmark"></span>
-            <label> {inventory.reactions}</label>
+            <label data-testid="reactions-label"> {inventory.reactions}</label>
           </div>
         </div>
       </div>

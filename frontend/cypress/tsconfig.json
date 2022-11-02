@@ -1,0 +1,11 @@
+{
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "noEmit": true,
+        "types": ["cypress", "node"],
+        "isolatedModules": false
+
+    },
+    // should we also include all files that ends with tsx ?
+    "include": ["../node_modules/cypress", "./**/*.ts"]
+}
