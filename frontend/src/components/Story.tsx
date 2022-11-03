@@ -6,16 +6,19 @@ import { useRecoilState } from "recoil";
 import { expandedStoriesListState } from "./storyListState";
 
 const Story: React.FC<StoryProps> = ({ inventory }) => {
-  //const listOfExpandedStories = useRecoilValue(expandedStoriesListState); //["id1", "id2"]           //getExpandedStateFromRecoil() -> ["id1", "id2", "id3"...]
+  /*expandedList is set to the value of the state,
+  setExpandedList is set to the function which updates 
+  the value of the state when called. */
   const [expandedList, setExpandedList] = useRecoilState(
     expandedStoriesListState
   );
   const index = expandedList.findIndex(
     (listItem) => listItem === inventory._id
   );
-  //const [readMore, setReadMore] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
+  /*Mutation is used to increase/decrease reactions (likes) 
+  and the UI is updated when the action of liking/unliking is done.*/
+  const [isFavorite, setIsFavorite] = useState(false);
   const [increaseReaction] = useMutation(INCREMENT_REACTION);
   const [decreaseReaction] = useMutation(DECREASE_REACTION);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,25 +30,24 @@ const Story: React.FC<StoryProps> = ({ inventory }) => {
     }
   };
 
+  /*The list of which stories the user wants to be expanded are updated.
+  If the story was expanded its id is removed from the list, 
+  and if it was not expanded its id is added to the list.  */
   const updateRecoilList = () => {
-    // console.log("Updating the list :))");
     if (expandedList.includes(inventory._id)) {
-      //Finn  funksjonen som kan kan fjerne fra en array i recoil staten. F.eks.:
       setExpandedList((oldExpandedList) => {
         return oldExpandedList.filter((value, i) => {
           return i !== index;
         });
       });
     } else {
-      //Finn  funksjonen som kan oppdatere staten i recoil f.eks.:
-
       setExpandedList((oldExpandedList) => [...oldExpandedList, inventory._id]);
     }
   };
 
+  /*readMore is a boolean and is true if 
+  the user have expanded the story (identified by an unique id)*/
   const readMore = expandedList.includes(inventory._id);
-  // console.log(readMore);
-  // console.log(expandedList);
 
   return (
     <div className="story-div  light-gray-border" data-testid="stories-list">
