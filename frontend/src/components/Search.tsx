@@ -171,6 +171,7 @@ export function Search() {
         )}
         <div className="pagination-div yellow-border">
           <Pagination
+            data-testid="pagination"
             count={data && Math.ceil(data.getPost.count / pageSize)}
             onChange={(event, page) => handlePageClick(event, page)}
             className="paginationItemStyle red-border"
