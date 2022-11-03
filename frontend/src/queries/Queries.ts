@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+//graphql mutations and queries
 export const INCREMENT_REACTION = gql`
     mutation IncrementReaction($incrementReactionsId: Int!) {
       incrementReaction(id: $incrementReactionsId) {
