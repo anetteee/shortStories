@@ -108,6 +108,7 @@ export function Search() {
               Filter stories{" "}
             </label>
             <select
+              data-testid="filter-select"
               className="filter-select red-border"
               name="filter"
               id="filter-drop-down"
@@ -134,6 +135,7 @@ export function Search() {
               Sort stories
             </label>
             <select
+              data-testid="sort-select"
               className="sort-select red-border"
               id="sort-drop-down"
               value={sortFilter}

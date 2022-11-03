@@ -29,6 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test ./src",
     "eject": "react-scripts eject",
+    "test:e2e-open": "cypress open --config-file \"./cypress/config/cypress-base.json\"",
     "test:e2e": "cypress run --headed --config-file \"./cypress/config/cypress-base.json\" "
   },
   "eslintConfig": {
