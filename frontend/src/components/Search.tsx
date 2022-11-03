@@ -36,12 +36,7 @@ export function Search() {
   (the data for the next page)*/
   const handlePageClick = (event: React.ChangeEvent<unknown>, page: number) => {
     setPageNumber(page);
-    let newOffset;
-    if (page < pageNumber) {
-      newOffset = (page - 1) * pageSize;
-    } else {
-      newOffset = (page - 1) * pageSize;
-    }
+    let newOffset = (page - 1) * pageSize;
     setOffset(newOffset);
 
     refetch({
@@ -183,9 +178,6 @@ export function Search() {
           />
         </div>
       </section>
-
-      {/* ha med eller droppe footer ?  */}
-      <footer></footer>
     </div>
   );
 }
