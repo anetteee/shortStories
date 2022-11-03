@@ -6,15 +6,21 @@ import Story from "./Story";
 import { FetchResult, Post } from "./Types";
 import { GET_POST_INVENTORY } from "../queries/Queries";
 
+//pageSize is the max number of stories per page
 const pageSize = 10;
 
 export function Search() {
-  const [pageNumber, setPageNumber] = useState(1);
+  //useStates for input search text, selected tags and sort
   const [searchText, setSearchText] = React.useState<string>("");
   const [selects, setSelects] = React.useState<string>("");
   const [sortFilter, setsortFilter] = React.useState<string>("");
   const [input, setInput] = React.useState<string>("");
+
+  //useStates for pagination
+  const [pageNumber, setPageNumber] = useState(1);
   const [offset, setOffset] = React.useState(0);
+
+  //Hook to get data from the database via backend
   const { loading, data, refetch } = useQuery<FetchResult>(GET_POST_INVENTORY, {
     variables: {
       tag: selects,
@@ -26,6 +32,8 @@ export function Search() {
     },
   });
 
+  /*updates the offset and refetches the data with this offset 
+  (the data for the next page)*/
   const handlePageClick = (event: React.ChangeEvent<unknown>, page: number) => {
     setPageNumber(page);
     let newOffset;
@@ -53,8 +61,6 @@ export function Search() {
     setInput(searchText);
   };
 
-  // console.log("limit: " + pageSize);
-  // console.log("input: " + input);
   return (
     <div className="parent-div light-pink-border">
       <header className="header blue-border">
