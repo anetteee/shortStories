@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { MockedProvider, MockedResponse } from "@apollo/client/testing";
+import { render, screen } from "@testing-library/react";
+import { MockedProvider } from "@apollo/client/testing";
 import { GET_POST_INVENTORY } from "../../queries/Queries";
 import { Search } from "../Search";
 import { RecoilRoot } from "recoil";
@@ -137,7 +137,7 @@ const mocks2 = [
   },
 ];
 
-it("renders without error", async () => {
+it("Loads without error, and presents the data on page", async () => {
   render(
     <RecoilRoot>
       <MockedProvider mocks={mocks1} addTypename={false}>
@@ -151,7 +151,7 @@ it("renders without error", async () => {
   ).toBeInTheDocument();
 });
 
-it("returns no post found message", async () => {
+it("returns error message if the dataset is not available", async () => {
   render(
     <RecoilRoot>
       <MockedProvider mocks={mocks2} addTypename={false}>
