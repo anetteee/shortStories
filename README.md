@@ -89,7 +89,7 @@ The web application has a layout where the search fields and the filtering and t
 
 ## Database
 
-We chose to use MongoDB as our database. We downloaded data of short stories as a JSON file from “[https://dummyjson.com]” "(https://dummyjson.com)", which we then imported into our database. MongoDB was chosen because it enabled us to rapidly start developing data, and since it is widely used in industry and by major companies, like eBay.
+We chose to use MongoDB as our database. We downloaded data of short stories as a JSON file from "(https://dummyjson.com)", which we then imported into our database. MongoDB was chosen because it enabled us to rapidly start developing data, and since it is widely used in industry and by major companies, like eBay.
 
 # Requirements for use of technology
 
