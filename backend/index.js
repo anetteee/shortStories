@@ -6,6 +6,8 @@ const resolver = require("./resolver");
 
 async function startServer() {
   const app = express();
+
+  //creates server with schema and resolver function for the fields in the schema
   const apolloServer = new ApolloServer({
     typeDefs: typeDefs,
     resolvers: resolver,
@@ -15,6 +17,7 @@ async function startServer() {
 
   apolloServer.applyMiddleware({ app: app });
 
+  //Connect to the database
   await mongoose.connect(
     "mongodb://admin:passord123@it2810-27.idi.ntnu.no:27017/admin?directConnection=true",
     {

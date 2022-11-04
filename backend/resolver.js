@@ -1,7 +1,8 @@
 const Post = require("./models/Post");
 
 const resolver = {
-  //methods that get data from database
+  // method that gets data from database. Returns data with a number of posts (limit) from the (offset) number post
+  // based on input, tags and sorts by wanted order.
   Query: {
     getPost: async (parent, args, context, info) => {
       let data;
@@ -15,19 +16,16 @@ const resolver = {
         sortOrder = -1; //sets descending
       }
 
-      /*Returns data with a number of posts (limit) from the (offset) number post.
-      Returns desired data based on inputs 
-      and sorts by wanted order*/
-
       //search on the whole input, caseinsensitive
       var regExp = new RegExp("\\b" + args.input + "\\b", "i");
+
+      //filter on tag and search
       if (
         args.tag != null &&
         args.tag != "" &&
         args.input != null &&
         args.input != ""
       ) {
-        //filter on tag and search
         data = await Post.find({
           tags: args.tag,
           title: { $regex: regExp },
@@ -76,7 +74,6 @@ const resolver = {
         posts: data,
         count,
       };
-      console.log(response);
 
       return response;
     },
