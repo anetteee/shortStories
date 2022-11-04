@@ -157,7 +157,12 @@ export function Search() {
         {loading ? (
           <h3>Loading...</h3>
         ) : (
-          <div className="all-stories-div ">
+          <div className="all-stories-div">
+            {!data && (
+              <p className="not-found story-div light-gray-border">
+                No stories available
+              </p>
+            )}
             {data && data.getPost.posts?.length === 0 && (
               <p className="not-found story-div light-gray-border">
                 Found no stories matching your search and choice of filter
