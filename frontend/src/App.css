@@ -1,19 +1,15 @@
 /* containers*/ 
-/* bakgrunnsfargen for heile sida legges i det aller ytterste body-elemenetet som brukes i index-html. */
+/* background color is set in the body-element in index.html. */
 body {
   background-image: linear-gradient(90deg, #256670 0%, #407056 100%);  
   width: 100%;  
 }
-
 header, 
 section {
   padding: 1rem 0;
 }
 
-
-
 /* text */
-
 body,
 h1,
 h2,
@@ -24,7 +20,6 @@ p {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   word-wrap: break-word;  /* this makes the words not flow out of the container */
 }
-
 h1 {
   font-size: clamp(23px, 10px + 14vw, 49px);
   padding-bottom: 1rem;
@@ -36,26 +31,26 @@ h2 {
 h3 {
   font-weight: normal;
 }
-p {
+.p-header {
   font-size: clamp(10px, 11px + 5vw, 23px );
 }
+p {
+  font-size: clamp(5px, 5px + 5vw, 18px );
+}
 label {
-  font-size: clamp(10px, 11px + 6vw, 17px );
+  font-size: clamp(10px, 11px + 6vw, 18px );
   padding-bottom: 1%;
 }
-
 .p-extra-margin {
   margin-bottom: 20px;
-  font-size: clamp(5px, 5px + 5vw, 18px );
+
 }
 .p-no-margin {
   margin-bottom: 0px;
-  font-size: clamp(5px, 5px + 5vw, 18px );
   display: inline;
 }
 
 /* images */
-
 img {
   display: block;
   max-width: 100%;
