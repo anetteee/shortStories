@@ -27,25 +27,27 @@ To be able to run the application locally you need to run both backend and front
 
 ### Backend
 
-cd backend
-npm run dev
+- cd backend
+- npm run dev
 
 ### Frontend
 
-cd frontend
-npm start
+- cd frontend
+- npm start
 
 ## Running the tests
 
-Unit tests:
-cd frontend
-npm test
+### Unit tests
 
-End-2-end tests:
+- cd frontend
+- npm test
+
+### End-2-end tests
+
 You have to run three terminals at the same time, one for the server in backend, one for the application in frontend, and one for the tests in the frontend folder. When the cypress window opens, you have to click on the test called “frontend.spec.ts” to actually run the end-2-end test.
 
-cd frontend
-npm run test:e2e-open
+- cd frontend
+- npm run test:e2e-open
 
 # Requirements for functionality and content
 
