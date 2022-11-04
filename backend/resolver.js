@@ -1,7 +1,8 @@
 const Post = require("./models/Post");
 
 const resolver = {
-  //method that get data from database
+  // method that gets data from database. Returns data with a number of posts (limit) from the (offset) number post
+  // based on input, tags and sorts by wanted order.
   Query: {
     getPost: async (parent, args, context, info) => {
       let data;
@@ -14,10 +15,6 @@ const resolver = {
       } else {
         sortOrder = -1; //sets descending
       }
-
-      /*Returns data with a number of posts (limit) from the (offset) number post.
-      Returns desired data based on input, tags 
-      and sorts by wanted order*/
 
       //search on the whole input, caseinsensitive
       var regExp = new RegExp("\\b" + args.input + "\\b", "i");
