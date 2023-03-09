@@ -15,12 +15,12 @@ To be able to run the application locally you need to run both backend and front
 
 - npm install
 
-### If backend
+### backend
 
 - npm i apollo-server-express graphql nodemon express --save
 - npm i mongoose
 
-### In frontend
+### Frontend
 
 - npm install react-router-dom
 - npm install --save-dev @types/react-router-dom
