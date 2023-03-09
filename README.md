@@ -1,6 +1,10 @@
-# project-3
+# Search engine with React
 
-This documentation consists of a guide of how to run the application, features of the application, reflections around the design regarding accessibility and sustainability, technologies used and descriptions of testing.
+# About the project
+
+The project is developed in connection with the course IT2810 Web Development at NTNU. The team consist of the four members Rebecca Strandkleiv, Camilla Kopperud, Tuva Djupvik and Anette Johansen.
+
+This documentation consists of a guide of how to run the application, features of the application, technologies used and descriptions of testing, reflections around the design regarding accessibility and sustainability.
 
 # Installing and running the application
 
@@ -49,7 +53,7 @@ You have to run three terminals at the same time, one for the server in backend,
 - cd frontend
 - npm run test:e2e-open
 
-# Requirements for functionality and content
+# Functionality and content
 
 ## Search
 
@@ -73,17 +77,6 @@ A user can add a like to each story. This will increase the count of likes on th
 
 This functionality is not optimal as the user can react more than once on a post if the page is closed and opened up again. Possible ways to fix this could be using localstorage to keep track of the stories reacted on, or make a user component.
 
-## Universal design/web accessibility
-
-The webpage has a few adaptations to make it easier for people with different disabilities to use it. For the visually impaired the page has a noticeable contrast between the text and the background. Furthermore, it is possible to zoom in and out on the page and there is a normal distance between the words in the stories. The buttons on the page show a shadow when it is hovered over, which makes it easier for a user to see that they are hovering the button. The buttons are of a reasonable size, which makes them easy to use.The keyboard can be used to scroll down the page, and also scroll through the filters and sort. The page hopefully has understandable text, where each input field and drop-down menu has a description above. The group has also focused on using html elements that match the content and tried using as few div elements that we managed.This is done to make it more compatible for text-to-speech programs to interpret the web page. In future projects we will focus on this even more.
-
-## Sustainability
-
-When querying the database we use an offset-based pagination to avoid unnecessary gathering of data from the database, which reduces the use of resources. Offset-based pagination goes through all the data until the last data object is fetched (object number: offset + limit). For example if data is gathered for the first page, only ten stories need to be iterated through, in contrast to the last page where there are 150 stories that are considered. To increase the sustainability of the page we could have used cursor based pagination. This can reduce the use of resources that gather data from the database since it only goes through the relevant data.
-
-By sorting and filtering directly on the database, enabled by GraphQL, we also avoid gathering data that is not going to be presented on the site and this is a lot more sustainable than first gathering all of the data before sorting and filtering it.
-
-The use of the React library for building the user interface is also sustainable in itself since it only updates and renders the components that are affected by a change in a state and does not render the whole page again.
 
 ## Design and reasonable choices
 
@@ -93,7 +86,7 @@ The web application has a layout where the search fields and the filtering and t
 
 We chose to use MongoDB as our database. We downloaded data of short stories as a JSON file from "(https://dummyjson.com)", which we then imported into our database. MongoDB was chosen because it enabled us to rapidly start developing data, and since it is widely used in industry and by major companies, like eBay.
 
-# Requirements for use of technology
+# Technology
 
 ## Frontend
 
@@ -124,6 +117,18 @@ We used Jest for unit testing and with a MockProvider we mocked an ApolloProvide
 ### End-to-end
 
 We used Cypress to automate the end-to-end testing, because it is a testing framework with a simple user interface, as well as good documentation. In the end-to-end tests we test at least one instance of each of the website’s features. The end-to-end tests have extended the test coverage of the website, helping us to make sure that our website is working as it should.
+
+## Universal design/web accessibility
+
+The webpage has a few adaptations to make it easier for people with different disabilities to use it. For the visually impaired the page has a noticeable contrast between the text and the background. Furthermore, it is possible to zoom in and out on the page and there is a normal distance between the words in the stories. The buttons on the page show a shadow when it is hovered over, which makes it easier for a user to see that they are hovering the button. The buttons are of a reasonable size, which makes them easy to use.The keyboard can be used to scroll down the page, and also scroll through the filters and sort. The page hopefully has understandable text, where each input field and drop-down menu has a description above. The group has also focused on using html elements that match the content and tried using as few div elements that we managed.This is done to make it more compatible for text-to-speech programs to interpret the web page. In future projects we will focus on this even more.
+
+## Sustainability
+
+When querying the database we use an offset-based pagination to avoid unnecessary gathering of data from the database, which reduces the use of resources. Offset-based pagination goes through all the data until the last data object is fetched (object number: offset + limit). For example if data is gathered for the first page, only ten stories need to be iterated through, in contrast to the last page where there are 150 stories that are considered. To increase the sustainability of the page we could have used cursor based pagination. This can reduce the use of resources that gather data from the database since it only goes through the relevant data.
+
+By sorting and filtering directly on the database, enabled by GraphQL, we also avoid gathering data that is not going to be presented on the site and this is a lot more sustainable than first gathering all of the data before sorting and filtering it.
+
+The use of the React library for building the user interface is also sustainable in itself since it only updates and renders the components that are affected by a change in a state and does not render the whole page again.
 
 ## Known errors
 
